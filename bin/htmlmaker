@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+var ArgumentParser = require("argparse").ArgumentParser;
+var main = require("../lib/main");
+
+var parser = new ArgumentParser({
+	addHelp: true
+});
+
+parser.addArgument(["docx-path"], {
+	type: "string",
+	help: "Path to the .docx file to convert."
+});
+parser.addArgument(["output-dir"], {
+	type: "string",
+	help: "Output directory for generated HTML and images. Images will be stored in separate files. Mutually exclusive with output-path."
+});
+parser.addArgument(["style-map"], {
+	type: "string",
+	help: "File containing a style map."
+});
+parser.addArgument(["style-functions"], {
+	type: "string",
+	help: "File containing a style specific functions.",
+	required: false
+});
+
+main(parser.parseArgs());

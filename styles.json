@@ -1,0 +1,524 @@
+{
+	"title": {
+		"doc-style": "TitlepageBookTitletit"
+	},
+	"tags" : [
+	  {
+			"tag-name": "div",
+			"reference-only" : true,
+			"data-types": [
+				{
+					"data-type":"part",
+					"attributes": [],
+					"nav": true,
+					"doc-style": ["PartNumberpn", "PartTitlept"],
+					"class": []
+				}
+			]
+		},
+		{
+			"tag-name": "section",
+			"reference-only" : true,
+			"data-types": [
+				{
+					"data-type":"preface",
+					"attributes": [],
+					"doc-style": ["AdCardMainHeadacmh"],
+					"class": ["adcard"]
+				},
+				{
+					"data-type":"preface",
+					"attributes": [],
+					"nav": true,
+					"doc-style": ["FMHeadfmh", "FrontSalesTitlefst"],
+					"class": []
+				},
+				{
+					"data-type":"appendix",
+					"attributes": [],
+					"nav": true,
+					"doc-style": ["BMHeadbmh", "AboutAuthorTextHeadatah"],
+					"class": []
+				},
+				{
+					"data-type":"chapter",
+					"attributes": [],
+					"add-nav": true,
+					"nav": true,
+					"doc-style": ["ChapTitlect", "ChapTitleNonprintingctnp"],
+					"class": [],
+					"behavior": [
+						{
+							"name": "aggregate",
+							"required-parent": ["part", "book"]
+						}
+					]
+				},
+				{
+					"data-type":"halftitlepage",
+					"attributes": [],
+					"doc-style": ["HalftitleBookTitlehtit"],
+					"class": []
+				},
+				{
+					"data-type":"titlepage",
+ 					"attributes": [],
+					"doc-style": ["TitlepageBookTitletit"],
+					"class": []
+				}
+			]
+		},
+		{
+			"tag-name": "section",
+			"data-types": [
+				{
+					"data-type":"copyright-page",
+					"attributes": [],
+					"doc-style": ["CopyrightTextsinglespacecrtx", "CopyrightTextdoublespacecrtxd"],
+					"class": [],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "aggregate",
+							"required-parent": ["part", "book"]
+						}
+					]
+				},
+				{
+					"data-type":"dedication",
+					"attributes": [],
+					"doc-style": ["Dedicationded"],
+					"class": [],
+					"inner-text": true,
+					"behavior": [
+						{
+							"name": "aggregate",
+							"required-parent": ["part", "book"]
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "h1",
+			"data-types": [
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["PartNumberpn",
+						"PartTitlept"],
+					"class": [],
+					"inner-text": true,
+					"behavior": [
+						{
+							"name": "new-parent",
+							"parent": "div",
+							"required-parent": ["book"]
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "h1",
+			"data-types": [
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["BMHeadbmh",
+						"BMHeadALTabmh",
+						"AppendixHeadaph",
+						"AboutAuthorTextHeadatah",
+						"ChapTitlect",
+						"ChapTitleNonprintingctnp",
+						"FMHeadfmh",
+						"FMHeadALTafmh",
+						"FrontSalesTitlefst",
+						"AdCardMainHeadacmh",
+						"TitlepageBookTitletit",
+						"HalftitleBookTitlehtit"],
+					"class": [],
+					"inner-text": true,
+					"behavior": [
+						{
+							"name": "new-parent",
+							"parent": "section",
+							"required-parent": ["part", "book"]
+						}
+					]
+				},
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["Heading1"],
+					"class": [],
+					"inner-text": true,
+					"behavior": [
+						{
+							"name": "new-sibling"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "blockquote",
+			"data-types": [
+				{
+					"data-type":"epigraph",
+					"attributes": [],
+					"doc-style": ["PartEpigraphnon-versepepi",
+						"PartEpigraphversepepiv",
+						"PartEpigraphSourcepeps",
+						"ChapEpigraphnon-versecepi",
+						"ChapEpigraphversecepiv",
+						"ChapEpigraphSourceceps",
+						"FMEpigraphnon-versefmepi",
+						"FMEpigraphversefmepiv",
+						"FMEpigraphSourcefmeps",
+						"FMEpigraph-non-versefmepi",
+						"Epigraphnon-verseepi",
+						"Epigraphverseepiv",
+						"EpigraphSourceeps",
+						"EpigraphinTextnon-versetepi",
+						"EpigraphinTextversetepiv",
+						"EpigraphinTextSourceteps"],
+					"class": [],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "aggregate"
+						}
+					]
+				},
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["Extractext",
+              "ExtractSourceexts",
+              "Extract-Newspapernews",
+              "Extract-Diaryextd",
+              "Extract-Transcripttrans",
+              "Extract-NoIndentext1",
+              "Extract-BulletListextbl",
+              "Extract-NumListextnl",
+              "ExtractHeadexth",
+              "Extract-VerseorPoetryextv",
+              "Extract-Noteextn",
+              "Extract-NoteHeadextnh",
+              "Extract-Headlineexthl",
+              "Extract-Emailextem",
+              "Extract-EmailHeadingemh",
+              "Extract-Websiteextws",
+              "Extract-SongLyricextsl",
+              "Extract-BusinessCardextbc",
+              "Extract-Telegramtel",
+              "Extract-Inscriptionins",
+              "Extract-ScheduleofEventssch"],
+					"class": ["extract"],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "aggregate"
+						}
+					]
+				},
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["LetterExtHeadnotehn",
+              "LetterExtClosinglcl",
+              "LetterExtGeneralextl",
+              "LetterExtSalutationlsa",
+              "LetterExtSignaturelsig",
+              "LetterExtDatelineldl",
+              "LetterExtAddressladd",
+              "LetterExtBodyTextNo-Indentltx1",
+              "LetterExtBodyTextltx"],
+					"class": ["letter"],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "aggregate"
+						}
+					]
+				},
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["BOBAdQuoteHeadbobqh",
+              "BOBAdQuotebobq",
+              "BOBAdQuoteNo-Indentbobq1",
+              "BOBAdQuoteSourcebobqs"],
+					"class": ["bob"],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "aggregate"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "pre",
+			"data-types": [
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["PoemTitlevt",
+						"PoemSubtitlevst",
+						"PoemLevel-1Subheadvh1",
+						"PoemLevel-2Subheadvh2",
+						"PoemLevel-3Subheadvh3",
+						"PoemLevel-4Subheadvh4",
+						"VerseTextvtx",
+						"VerseRun-inTextNo-Indentvrtx1",
+						"VerseRun-inTextvrtx"],
+					"class": ["poetry"],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "aggregate"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "aside",
+			"data-types": [
+				{
+					"data-type":"sidebar",
+					"attributes": [],
+					"doc-style": ["BoxHeadbh",
+						"BoxSubheadbsh",
+						"BoxEpigraphnon-versebepi",
+						"BoxEpigraphSourcebeps",
+						"BoxEpigraphversebepiv",
+						"BoxEpigraphversebepiv",
+						"BoxEpigraphversebepiv",
+						"BoxEpigraphversebepiv",
+						"BoxEpigraphversebepiv",
+						"BoxEpigraphversebepiv",
+						"BoxEpigraphSourcebeps",
+						"BoxTextNo-Indentbtx1",
+						"BoxHead-Level-1bh1",
+						"BoxTextNo-Indentbtx1",
+						"BoxListNumbnl",
+						"BoxListNumbnl",
+						"BoxListNumbnl",
+						"BoxListNumbnl",
+						"BoxHead-Level-2bh2",
+						"BoxListBulletbbl",
+						"BoxListBulletbbl",
+						"BoxTextbtx",
+						"BoxTextbtx",
+						"BoxHead-Level-2bh2",
+						"BoxTextNo-Indentbtx1",
+						"BoxHead-Level-3bh3",
+						"BoxTextbtx",
+						"BoxHead-Level-4bh4",
+						"BoxTextNo-Indentbtx1",
+						"BoxExtractbext",
+						"BoxTextbtx",
+						"BoxHead-Level-2bh2",
+						"BoxTextNo-Indentbtx1",
+						"BoxHead-Level-2bh2",
+						"BoxTextNo-Indentbtx1",
+						"BoxTextbtx",
+						"BoxTextbtx",
+						"BoxSourceNotebsn",
+						"BoxFootnotebfn"],
+					"class": ["box"],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "aggregate"
+						}
+					]
+				},
+				{
+					"data-type":"sidebar",
+					"attributes": [],
+					"class": ["sidebar"],
+					"doc-style": ["SidebarHeadsbh",
+						"SidebarSubheadsbsh",
+						"SidebarEpigraphnon-versesbepi",
+						"SidebarEpigraphSourcesbeps",
+						"SidebarEpigraphversesbepiv",
+						"SidebarEpigraphversesbepiv",
+						"SidebarEpigraphversesbepiv",
+						"SidebarEpigraphversesbepiv",
+						"SidebarEpigraphversesbepiv",
+						"SidebarEpigraphversesbepiv",
+						"SidebarEpigraphSourcesbeps",
+						"SidebarTextNo-Indentsbtx1",
+						"SidebarHead-Level-1sbh1",
+						"SidebarTextNo-Indentsbtx1",
+						"SidebarListNumsbnl",
+						"SidebarListNumsbnl",
+						"SidebarListNumsbnl",
+						"SidebarListNumsbnl",
+						"SidebarHead-Level-2sbh2",
+						"SidebarListBulletsbbl",
+						"SidebarListBulletsbbl",
+						"SidebarTextsbtx",
+						"SidebarTextsbtx",
+						"SidebarHead-Level-2sbh2",
+						"SidebarTextNo-Indentsbtx1",
+						"SidebarHead-Level-3sbh3",
+						"SidebarTextNo-Indentsbtx1",
+						"SidebarHead-Level-4sbh4",
+						"SidebarTextNo-Indentsbtx1",
+						"SidebarExtractsbext",
+						"SidebarTextsbtx",
+						"SidebarHead-Level-2sbh2",
+						"SidebarTextNo-Indentsbtx1",
+						"SidebarHead-Level-2sbh2",
+						"SidebarTextNo-Indentsbtx1",
+						"SidebarTextsbtx",
+						"SidebarTextsbtx",
+						"SidebarSourceNotesbsn",
+						"SidebarFootnotesbfn"],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "aggregate"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "ol",
+			"data-types": [
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["ListNumnl", "AppendixListNumapnl"],
+					"class": [],
+					"inner-text": false,
+					"trace": {
+						"forward": ["li"]
+					},
+					"behavior": [
+						{
+							"name": "new-sibling"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "ul",
+			"data-types": [
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["ListBulletbl",
+						"ListUnnumul",
+						"AppendixListUnnumapul",
+						"AppendixListBulletapbl",
+						"Checklistck",
+						"ChapterContentscc"],
+					"class": [],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "new-sibling"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "li",
+			"data-types": [
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["ListNumSubentrynsl",
+						"ListAlphaSubentryasl",
+						"ListBulletSubentrybsl",
+						"ListUnnumSubentryusl",
+						"ChecklistSubentrycksl"],
+					"class": [],
+					"inner-text": true,
+					"behavior": [
+						{
+							"name": "new-child",
+							"required-parent": ["ol", "ul"]
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "figure",
+			"data-types": [
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["Illustrationholderill"],
+					"class": [],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "new-child"
+						}
+					],
+					"function": "figure"
+				}
+			]
+		},
+		{
+			"tag-name": "figcaption",
+			"data-types": [
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["Captioncap"],
+					"class": [],
+					"inner-text": true,
+					"behavior": [
+						{
+							"name": "new-sibling"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "p",
+			"data-types": [
+				{
+					"data-type":"",
+					"attributes": [],
+					"doc-style": ["IllustrationSourceis"],
+					"class": [],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "new-sibling"
+						}
+					],
+					"function": "figureSource"
+				},
+				{
+					"data-type":"@default",
+					"attributes": [],
+					"doc-style": ["@default"],
+					"class": [],
+					"inner-text": true,
+					"behavior": [
+						{
+							"name": "new-sibling",
+							"required-parent": ["div", "section", "li"]
+						}
+					]
+				}
+			]
+		}
+	]
+}
