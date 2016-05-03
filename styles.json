@@ -49,7 +49,6 @@
 					"class": [],
 					"behavior": [
 						{
-							"name": "aggregate",
 							"required-parent": ["part", "book"]
 						}
 					]
