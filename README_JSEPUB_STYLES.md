@@ -37,7 +37,7 @@ Whether or not this tag definition is for reference when processing for a `paren
 Are used to match against docx paragraph style id's and then describe the behavior in which they are processed.
 
 ####data-type `text`
-Text to be added to the `data-type` attribute of the html tag
+Text to be added to the `data-type` attribute of the html tag. Note that a data-type is REQUIRED for aggregating parents (e.g., sections, blockquotes, etc.)
 
 ####attributes `[]`
 List of attribute strings to be added to the html tag
@@ -72,7 +72,7 @@ Which behavior the conversion should use to place the html tag in the document
 
 *	#####name `text` 
 	One of `aggregate`, `new-parent`, `new-sibling`, `new-child` 
-	*	`aggregate` - Aggregate this and the following docx paragraphs if they match this tag's doc-type definition. If the tag does not yet exist, it will be created.
+	*	`aggregate` - Aggregate this and the following docx paragraphs if they match this tag's doc-type definition. If the tag does not yet exist, it will be created. Note that a data-type is REQUIRED in order for the child paras to correctly be aggregated inside the parent.
 	*	`new-parent` - Create a new html tag based on the reference name, and add it to the working document before the this tag as a new parent.
 	*	`new-sibling` - Add this tag to the current working document as a sibling 
 	*	`new-child` - Add this tag to the current working document as a child and push it onto the working stack as a parent for the next docx paragraph

@@ -88,7 +88,7 @@
 					"attributes": [],
 					"doc-style": ["Dedicationded"],
 					"class": [],
-					"inner-text": true,
+					"inner-text": false,
 					"behavior": [
 						{
 							"name": "aggregate",
@@ -191,7 +191,7 @@
 					]
 				},
 				{
-					"data-type":"",
+					"data-type":"extract",
 					"attributes": [],
 					"doc-style": ["Extractext",
               "ExtractSourceexts",
@@ -223,7 +223,7 @@
 					]
 				},
 				{
-					"data-type":"",
+					"data-type":"extract",
 					"attributes": [],
 					"doc-style": ["LetterExtHeadnotehn",
               "LetterExtClosinglcl",
@@ -243,7 +243,7 @@
 					]
 				},
 				{
-					"data-type":"",
+					"data-type":"quote",
 					"attributes": [],
 					"doc-style": ["BOBAdQuoteHeadbobqh",
               "BOBAdQuotebobq",
@@ -263,7 +263,7 @@
 			"tag-name": "pre",
 			"data-types": [
 				{
-					"data-type":"",
+					"data-type":"poetry",
 					"attributes": [],
 					"doc-style": ["PoemTitlevt",
 						"PoemSubtitlevst",
@@ -393,7 +393,7 @@
 			"tag-name": "ol",
 			"data-types": [
 				{
-					"data-type":"",
+					"data-type":"ordered-list",
 					"attributes": [],
 					"doc-style": ["ListNumnl", "AppendixListNumapnl"],
 					"class": [],
@@ -413,7 +413,7 @@
 			"tag-name": "ul",
 			"data-types": [
 				{
-					"data-type":"",
+					"data-type":"unordered-list",
 					"attributes": [],
 					"doc-style": ["ListBulletbl",
 						"ListUnnumul",
@@ -435,7 +435,7 @@
 			"tag-name": "li",
 			"data-types": [
 				{
-					"data-type":"",
+					"data-type":"list-item",
 					"attributes": [],
 					"doc-style": ["ListNumSubentrynsl",
 						"ListAlphaSubentryasl",
