@@ -30,14 +30,14 @@
 					"data-type":"preface",
 					"attributes": [],
 					"nav": true,
-					"doc-style": ["FMHeadfmh", "FrontSalesTitlefst"],
+					"doc-style": ["FMHeadfmh", "FMHeadNonprintingfmhnp", "FrontSalesTitlefst"],
 					"class": []
 				},
 				{
 					"data-type":"appendix",
 					"attributes": [],
 					"nav": true,
-					"doc-style": ["BMHeadbmh", "AboutAuthorTextHeadatah"],
+					"doc-style": ["BMHeadbmh", "BMHeadNonprintingbmhnp", "AboutAuthorTextHeadatah"],
 					"class": []
 				},
 				{
@@ -45,7 +45,7 @@
 					"attributes": [],
 					"add-nav": true,
 					"nav": true,
-					"doc-style": ["ChapTitlect", "ChapTitleNonprintingctnp"],
+					"doc-style": ["ChapNumbercn", "ChapTitlect", "ChapTitleNonprintingctnp"],
 					"class": [],
 					"behavior": [
 						{
@@ -126,12 +126,14 @@
 					"attributes": [],
 					"doc-style": ["BMHeadbmh",
 						"BMHeadALTabmh",
+						"BMHeadNonprintingbmhnp",
 						"AppendixHeadaph",
 						"AboutAuthorTextHeadatah",
 						"ChapTitlect",
 						"ChapTitleNonprintingctnp",
 						"FMHeadfmh",
 						"FMHeadALTafmh",
+						"FMHeadNonprintingfmhnp",
 						"FrontSalesTitlefst",
 						"AdCardMainHeadacmh",
 						"TitlepageBookTitletit",
