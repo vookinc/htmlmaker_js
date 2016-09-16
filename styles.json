@@ -30,14 +30,14 @@
 					"data-type":"preface",
 					"attributes": [],
 					"nav": true,
-					"doc-style": ["FMHeadfmh", "FMHeadNonprintingfmhnp", "FrontSalesTitlefst"],
+					"doc-style": ["FMHeadfmh", "FMHeadALTafmh", "FMHeadNonprintingfmhnp", "FrontSalesTitlefst"],
 					"class": []
 				},
 				{
 					"data-type":"appendix",
 					"attributes": [],
 					"nav": true,
-					"doc-style": ["BMHeadbmh", "BMHeadNonprintingbmhnp", "AboutAuthorTextHeadatah"],
+					"doc-style": ["BMHeadbmh", "BMHeadALTabmh", "BMHeadNonprintingbmhnp", "AboutAuthorTextHeadatah"],
 					"class": []
 				},
 				{
