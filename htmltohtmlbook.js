@@ -13,6 +13,7 @@ fs.readFile(file, function editContent (err, contents) {
 var toplevelheads = {};
 toplevelheads['.ChapTitlect'] = "chapter";
 toplevelheads['.BMHeadbmh'] = "appendix";
+toplevelheads['.AdCardMainHeadacmh'] = "preface";
 
 var extractparas = [".Extractext",
                     ".ExtractSourceexts",
@@ -35,6 +36,12 @@ var extractparas = [".Extractext",
                     ".Extract-Telegramtel",
                     ".Extract-Inscriptionins",
                     ".Extract-ScheduleofEventssch"];
+
+var omitparas = [".PageBreakpb",
+                 ".SectionBreaksbr",
+                 ".PartStartpts",
+                 ".PartEndpte",
+                 ".ChapNumbercn"];
 
 // wrap content in main sections
 var toplevelheadsarr = [];
@@ -91,6 +98,14 @@ extractparas.forEach(function ( val ) {
 
 // wrap extract paras in blockquote
 
+// removing unneccessary paras. 
+// THIS NEEDS TO HAPPEN LAST
+
+var omitparaslist = omitparas.join(", ");
+
+$(omitparaslist).remove();
+
+// write the new html to a file
   var output = $.html();
     fs.writeFile(file, output, function(err) {
       if(err) {
