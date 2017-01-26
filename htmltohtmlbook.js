@@ -52,7 +52,6 @@ for (var k in toplevelheads) {
 
 var toplevelheadslist = toplevelheadsarr.join(", ");
 
-//toplevelheads.forEach(function ( val ) {
 for (var k in toplevelheads) {
   $( k ).each(function() {
       var nextsiblings = $(this).nextUntil(toplevelheadslist).addBack();
@@ -64,39 +63,14 @@ for (var k in toplevelheads) {
   });
 };
 
-var extractparaslist = extractparas.join(", ");
-
-$(extractparaslist).nextAll(extractparaslist).addBack();
-
-extractparas.forEach(function ( val ) {
-  $( val ).each(function() {
-  thisblock = $(this).nextAll(extractparaslist).addBack();
-  var newblockquote = $("<blockquote/>").addClass("temp");
-  $(this).before(newblockquote);
-  var node = $(".temp");
-  node.append(thisblock);
-  $(".temp").removeClass("temp");
-  });
-});
-
+// wrap extracts in blockquote
 var extractparaslist = extractparas.join(", ");
 
 extractparas.forEach(function ( val ) {
   $( val ).each(function() {
-  var thisparent = $(this).parent();
-  console.log(thisparent.tagName);
-  if (thisparent.tagName !== 'blockquote') {
-    var thisblock = $(this).nextUntil(':not(' + extractparaslist + ')').addBack();
-    var newblockquote = $("<blockquote/>").addClass("temp");
-    $(this).before(newblockquote);
-    var node = $(".temp");
-    node.append(thisblock);
-    $(".temp").removeClass("temp");
-  };
+
   });
 });
-
-// wrap extract paras in blockquote
 
 // removing unneccessary paras. 
 // THIS NEEDS TO HAPPEN LAST
