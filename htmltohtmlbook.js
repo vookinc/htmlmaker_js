@@ -53,6 +53,86 @@ var epigraphparas = [".PartEpigraph-non-versepepi",
                     ".EpigraphinText-versetepiv",
                     ".EpigraphinText-Sourceteps"];
 
+var poetryparas = [".PoemTitlevt",
+                   ".PoemSubtitlevst",
+                   ".PoemLevel-1Subheadvh1",
+                   ".PoemLevel-2Subheadvh2",
+                   ".PoemLevel-3Subheadvh3",
+                   ".PoemLevel-4Subheadvh4",
+                   ".VerseTextvtx",
+                   ".VerseRun-inTextNo-Indentvrtx1",
+                   ".VerseRun-inTextvrtx"];
+
+var boxparas = [".BoxHeadbh",
+                ".BoxSubheadbsh",
+                ".BoxEpigraph-non-versebepi",
+                ".BoxEpigraphSourcebeps",
+                ".BoxEpigraph-versebepiv",
+                ".BoxEpigraphSourcebeps",
+                ".BoxTextNo-Indentbtx1",
+                ".BoxHead-Level-1bh1",
+                ".BoxTextNo-Indentbtx1",
+                ".BoxListNumbnl",
+                ".BoxListNumbnl",
+                ".BoxListNumbnl",
+                ".BoxListNumbnl",
+                ".BoxHead-Level-2bh2",
+                ".BoxListBulletbbl",
+                ".BoxListBulletbbl",
+                ".BoxTextbtx",
+                ".BoxTextbtx",
+                ".BoxHead-Level-2bh2",
+                ".BoxTextNo-Indentbtx1",
+                ".BoxHead-Level-3bh3",
+                ".BoxTextbtx",
+                ".BoxHead-Level-4bh4",
+                ".BoxTextNo-Indentbtx1",
+                ".BoxExtractbext",
+                ".BoxTextbtx",
+                ".BoxHead-Level-2bh2",
+                ".BoxTextNo-Indentbtx1",
+                ".BoxHead-Level-2bh2",
+                ".BoxTextNo-Indentbtx1",
+                ".BoxTextbtx",
+                ".BoxTextbtx",
+                ".BoxSourceNotebsn",
+                ".BoxFootnotebfn"];
+
+var sidebarparas = [".SidebarHeadsbh",
+                    ".SidebarSubheadsbsh",
+                    ".SidebarEpigraph-non-versesbepi",
+                    ".SidebarEpigraphSourcesbeps",
+                    ".SidebarEpigraph-versesbepiv",
+                    ".SidebarEpigraphSourcesbeps",
+                    ".SidebarTextNo-Indentsbtx1",
+                    ".SidebarHead-Level-1sbh1",
+                    ".SidebarTextNo-Indentsbtx1",
+                    ".SidebarListNumsbnl",
+                    ".SidebarListNumsbnl",
+                    ".SidebarListNumsbnl",
+                    ".SidebarListNumsbnl",
+                    ".SidebarHead-Level-2sbh2",
+                    ".SidebarListBulletsbbl",
+                    ".SidebarListBulletsbbl",
+                    ".SidebarTextsbtx",
+                    ".SidebarTextsbtx",
+                    ".SidebarHead-Level-2sbh2",
+                    ".SidebarTextNo-Indentsbtx1",
+                    ".SidebarHead-Level-3sbh3",
+                    ".SidebarTextNo-Indentsbtx1",
+                    ".SidebarHead-Level-4sbh4",
+                    ".SidebarTextNo-Indentsbtx1",
+                    ".SidebarExtractsbext",
+                    ".SidebarTextsbtx",
+                    ".SidebarHead-Level-2sbh2",
+                    ".SidebarTextNo-Indentsbtx1",
+                    ".SidebarHead-Level-2sbh2",
+                    ".SidebarTextNo-Indentsbtx1",
+                    ".SidebarTextsbtx",
+                    ".SidebarTextsbtx",
+                    ".SidebarSourceNotesbsn",
+                    ".SidebarFootnotesbfn"];
+
 var omitparas = [".PageBreakpb",
                  ".SectionBreaksbr",
                  ".PartStartpts",
@@ -110,6 +190,63 @@ epigraphparas.forEach(function ( val ) {
      var thisblock = $(this).nextUntil(notepigraphparaslist).addBack();
      var newblockquote = $("<blockquote/>").attr("data-type", "epigraph").addClass("temp");
      $(this).before(newblockquote);
+     var node = $(".temp");
+     node.append(thisblock);
+     $(".temp").removeClass("temp");
+   };
+   });
+ });
+
+// wrap poetry in pre
+var poetryparaslist = poetryparas.join(", ");
+var notpoetryparaslist = "*:not(" + poetryparaslist + ")";
+
+poetryparas.forEach(function ( val ) {
+   $( val ).each(function() {
+   var thisparent = $(this).parent();
+   console.log(thisparent[0].tagName);
+   if (thisparent[0].tagName !== 'PRE') {
+     var thisblock = $(this).nextUntil(notpoetryparaslist).addBack();
+     var newpre = $("<pre/>").addclass("poetry").addClass("temp");
+     $(this).before(newpre);
+     var node = $(".temp");
+     node.append(thisblock);
+     $(".temp").removeClass("temp");
+   };
+   });
+ });
+
+// wrap boxes in aside
+var boxparaslist = boxparas.join(", ");
+var notboxparaslist = "*:not(" + boxparaslist + ")";
+
+boxparas.forEach(function ( val ) {
+   $( val ).each(function() {
+   var thisparent = $(this).parent();
+   console.log(thisparent[0].tagName);
+   if (thisparent[0].tagName !== 'ASIDE') {
+     var thisblock = $(this).nextUntil(notboxparaslist).addBack();
+     var newaside = $("<aside/>").attr("data-type", "sidebar").addClass("box").addClass("temp");
+     $(this).before(newaside);
+     var node = $(".temp");
+     node.append(thisblock);
+     $(".temp").removeClass("temp");
+   };
+   });
+ });
+
+// wrap sidebar in aside
+var sidebarparaslist = sidebarparas.join(", ");
+var notsidebarparaslist = "*:not(" + sidebarparaslist + ")";
+
+sidebarparas.forEach(function ( val ) {
+   $( val ).each(function() {
+   var thisparent = $(this).parent();
+   console.log(thisparent[0].tagName);
+   if (thisparent[0].tagName !== 'ASIDE') {
+     var thisblock = $(this).nextUntil(notsidebarparaslist).addBack();
+     var newaside = $("<aside/>").attr("data-type", "sidebar").addClass("temp");
+     $(this).before(newaside);
      var node = $(".temp");
      node.append(thisblock);
      $(".temp").removeClass("temp");
