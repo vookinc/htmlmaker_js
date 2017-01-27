@@ -155,6 +155,11 @@ var omitparas = [".PageBreakpb",
 
 // MUST HAPPEN FIRST: adding parent containers
 // wrap content in main sections
+
+function makeNot(list) {
+  return "body:not(" + list + "), section:not(" + list + "), div:not(" + list + "), blockquote:not(" + list + "), pre:not(" + list + "), aside:not(" + list + "), p:not(" + list + ")";
+}
+
 var toplevelheadsarr = [];
 
 for (var k in toplevelheads) {
@@ -176,7 +181,7 @@ for (var k in toplevelheads) {
 
 // wrap extracts in blockquote
 var extractparaslist = extractparas.join(", ");
-var notextractparaslist = "p:not(" + extractparaslist + ")";
+var notextractparaslist = makeNot(extractparaslist);
 
 extractparas.forEach(function ( val ) {
    $( val ).each(function() {
@@ -197,7 +202,7 @@ extractparas.forEach(function ( val ) {
 
 // wrap epigraphs in blockquote
 var epigraphparaslist = epigraphparas.join(", ");
-var notepigraphparaslist = "p:not(" + epigraphparaslist + ")";
+var notepigraphparaslist = makeNot(epigraphparaslist);
 
 epigraphparas.forEach(function ( val ) {
    $( val ).each(function() {
@@ -218,7 +223,7 @@ epigraphparas.forEach(function ( val ) {
 
 // wrap poetry in pre
 var poetryparaslist = poetryparas.join(", ");
-var notpoetryparaslist = "p:not(" + poetryparaslist + ")";
+var notpoetryparaslist = makeNot(poetryparaslist);
 
 poetryparas.forEach(function ( val ) {
    $( val ).each(function() {
@@ -239,7 +244,7 @@ poetryparas.forEach(function ( val ) {
 
 // wrap boxes in aside
 var boxparaslist = boxparas.join(", ");
-var notboxparaslist = "p:not(" + boxparaslist + ")";
+var notboxparaslist = makeNot(boxparaslist);
 
 boxparas.forEach(function ( val ) {
    $( val ).each(function() {
@@ -260,7 +265,7 @@ boxparas.forEach(function ( val ) {
 
 // wrap sidebar in aside
 var sidebarparaslist = sidebarparas.join(", ");
-var notsidebarparaslist = "p:not(" + sidebarparaslist + ")";
+var notsidebarparaslist = makeNot(sidebarparaslist);
 
 sidebarparas.forEach(function ( val ) {
    $( val ).each(function() {
