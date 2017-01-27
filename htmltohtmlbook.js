@@ -314,6 +314,10 @@ sidebarparas.forEach(function ( val ) {
    });
  });
 
+// convert list paras to real lists
+
+// wrap illustrations in figure parent
+
 // create heading tags
 var headingslist = headingparas.join(", ");
 var headingslistselector = $(headingslist);
