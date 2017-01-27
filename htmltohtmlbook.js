@@ -65,12 +65,22 @@ for (var k in toplevelheads) {
 
 // wrap extracts in blockquote
 var extractparaslist = extractparas.join(", ");
+var notextractparaslist = "*:not(" +extractparaslist + ")";
 
 extractparas.forEach(function ( val ) {
-  $( val ).each(function() {
-
-  });
-});
+   $( val ).each(function() {
+   var thisparent = $(this).parent();
+   console.log(thisparent[0].tagName);
+   if (thisparent[0].tagName !== 'BLOCKQUOTE') {
+     var thisblock = $(this).nextUntil(notextractparaslist).addBack();
+     var newblockquote = $("<blockquote/>").addClass("temp");
+     $(this).before(newblockquote);
+     var node = $(".temp");
+     node.append(thisblock);
+     $(".temp").removeClass("temp");
+   };
+   });
+ });
 
 // removing unneccessary paras. 
 // THIS NEEDS TO HAPPEN LAST
