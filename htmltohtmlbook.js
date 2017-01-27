@@ -182,7 +182,6 @@ extractparas.forEach(function ( val ) {
    $( val ).each(function() {
    var thisparent = $(this).parent();
    var parentEl = thisparent[0].tagName.toLowerCase();
-   console.log(this.id);
    if (parentEl !== 'blockquote') {
      var prevblock = $($(this).prevUntil(notextractparaslist).get().reverse());
      var nextblock = $(this).nextUntil(notextractparaslist).addBack();
@@ -228,7 +227,7 @@ poetryparas.forEach(function ( val ) {
    if (parentEl !== 'pre') {
      var prevblock = $($(this).prevUntil(notpoetryparaslist).get().reverse());
      var nextblock = $(this).nextUntil(notpoetryparaslist).addBack();
-     var newpre = $("<pre/>").addclass("poetry").addClass("temp");
+     var newpre = $("<pre/>").addClass("poetry").addClass("temp");
      $(this).before(newpre);
      var node = $(".temp");
      node.append(prevblock);
