@@ -15,6 +15,25 @@ toplevelheads['.ChapTitlect'] = "chapter";
 toplevelheads['.BMHeadbmh'] = "appendix";
 toplevelheads['.AdCardMainHeadacmh'] = "preface";
 
+var headingparas = [".BMHeadbmh",
+                    ".BMHeadNonprintingbmhnp",
+                    ".BMHeadALTabmh",
+                    ".AppendixHeadaph",
+                    ".AboutAuthorTextHeadatah",
+                    ".PartNumberpn",
+                    ".PartTitlept",
+                    ".ChapTitlect",
+                    ".ChapTitleALTact",
+                    ".ChapTitleNonprintingctnp",
+                    ".FMHeadfmh",
+                    ".FMHeadNonprintingfmhnp",
+                    ".FMHeadALTafmh",
+                    ".FrontSalesTitlefst",
+                    ".BOBAdTitlebobt",
+                    ".AdCardMainHeadacmh",
+                    ".TitlepageBookTitletit",
+                    ".HalftitleBookTitlehtit"];
+
 var extractparas = [".Extractext",
                     ".ExtractSourceexts",
                     ".Extract-Newspapernews",
@@ -160,6 +179,17 @@ function makeNot(list) {
   return "body:not(" + list + "), section:not(" + list + "), div:not(" + list + "), blockquote:not(" + list + "), pre:not(" + list + "), aside:not(" + list + "), p:not(" + list + ")";
 }
 
+//function to replace element, keeping innerHtml & attributes
+  function replaceEl (selector, newTag) {
+    selector.each(function(){
+      var myAttr = $(this).attr();
+      var myHtml = $(this).html();
+      $(this).replaceWith(function(){
+          return $(newTag).html(myHtml).attr(myAttr);
+      });
+    });
+  }
+
 var toplevelheadsarr = [];
 
 for (var k in toplevelheads) {
@@ -283,6 +313,18 @@ sidebarparas.forEach(function ( val ) {
    };
    });
  });
+
+// create heading tags
+var headingslist = headingparas.join(", ");
+var headingslistselector = $(headingslist);
+
+headingslistselector.each(function(){
+    var myClass = $(this).attr("class");
+    var myHtml = $(this).html();
+    $(this).replaceWith(function(){
+        return $("<h1/>").html(myHtml).addClass(myClass);
+    });
+  });
 
 // removing unneccessary paras. 
 // THIS NEEDS TO HAPPEN LAST
