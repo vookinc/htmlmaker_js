@@ -320,9 +320,10 @@ var headingslistselector = $(headingslist);
 
 headingslistselector.each(function(){
     var myClass = $(this).attr("class");
+    var myID = $(this).attr("id");
     var myHtml = $(this).html();
     $(this).replaceWith(function(){
-        return $("<h1/>").html(myHtml).addClass(myClass);
+        return $("<h1/>").html(myHtml).addClass(myClass).attr("id", myID);
     });
   });
 
