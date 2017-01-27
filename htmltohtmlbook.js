@@ -35,7 +35,21 @@ var extractparas = [".Extractext",
                     ".Extract-BusinessCardextbc",
                     ".Extract-Telegramtel",
                     ".Extract-Inscriptionins",
-                    ".Extract-ScheduleofEventssch"];
+                    ".Extract-ScheduleofEventssch",
+                    ".LetterExtHeadnotehn",
+                    ".LetterExtClosinglcl",
+                    ".LetterExtGeneralextl",
+                    ".LetterExtSalutationlsa",
+                    ".LetterExtSignaturelsig",
+                    ".LetterExtDatelineldl",
+                    ".LetterExtAddressladd",
+                    ".LetterExtBodyTextNo-Indentltx1",
+                    ".LetterExtBodyTextltx",
+                    ".LetterExtPostscriptlps",
+                    ".BOBAdQuoteHeadbobqh",
+                    ".BOBAdQuotebobq",
+                    ".BOBAdQuoteNo-Indentbobq1",
+                    ".BOBAdQuoteSourcebobqs"];
 
 var epigraphparas = [".PartEpigraph-non-versepepi",
                     ".PartEpigraph-versepepiv",
@@ -139,6 +153,7 @@ var omitparas = [".PageBreakpb",
                  ".PartEndpte",
                  ".ChapNumbercn"];
 
+// MUST HAPPEN FIRST: adding parent containers
 // wrap content in main sections
 var toplevelheadsarr = [];
 
@@ -161,56 +176,63 @@ for (var k in toplevelheads) {
 
 // wrap extracts in blockquote
 var extractparaslist = extractparas.join(", ");
-var notextractparaslist = "*:not(" + extractparaslist + ")";
+var notextractparaslist = "p:not(" + extractparaslist + ")";
 
 extractparas.forEach(function ( val ) {
    $( val ).each(function() {
    var thisparent = $(this).parent();
-   console.log(thisparent[0].tagName);
-   if (thisparent[0].tagName !== 'BLOCKQUOTE') {
-     var thisblock = $(this).nextUntil(notextractparaslist).addBack();
-     var newblockquote = $("<blockquote/>").addClass("temp");
+   var parentEl = thisparent[0].tagName.toLowerCase();
+   console.log(this.id);
+   if (parentEl !== 'blockquote') {
+     var prevblock = $($(this).prevUntil(notextractparaslist).get().reverse());
+     var nextblock = $(this).nextUntil(notextractparaslist).addBack();
+     var newblockquote = $("<blockquote/>").addClass("tempextractparas");
      $(this).before(newblockquote);
-     var node = $(".temp");
-     node.append(thisblock);
-     $(".temp").removeClass("temp");
+     var node = $(".tempextractparas");
+     node.append(prevblock);
+     node.append(nextblock);
+     $(".tempextractparas").removeClass("tempextractparas");
    };
    });
  });
 
 // wrap epigraphs in blockquote
 var epigraphparaslist = epigraphparas.join(", ");
-var notepigraphparaslist = "*:not(" + epigraphparaslist + ")";
+var notepigraphparaslist = "p:not(" + epigraphparaslist + ")";
 
 epigraphparas.forEach(function ( val ) {
    $( val ).each(function() {
    var thisparent = $(this).parent();
-   console.log(thisparent[0].tagName);
-   if (thisparent[0].tagName !== 'BLOCKQUOTE') {
-     var thisblock = $(this).nextUntil(notepigraphparaslist).addBack();
-     var newblockquote = $("<blockquote/>").attr("data-type", "epigraph").addClass("temp");
+   var parentEl = thisparent[0].tagName.toLowerCase();
+   if (parentEl !== 'blockquote') {
+     var prevblock = $($(this).prevUntil(notepigraphparaslist).get().reverse());
+     var nextblock = $(this).nextUntil(notepigraphparaslist).addBack();
+     var newblockquote = $("<blockquote/>").attr("data-type", "epigraph").addClass("tempepigraphparas");
      $(this).before(newblockquote);
-     var node = $(".temp");
-     node.append(thisblock);
-     $(".temp").removeClass("temp");
+     var node = $(".tempepigraphparas");
+     node.append(prevblock);
+     node.append(nextblock);
+     $(".tempepigraphparas").removeClass("tempepigraphparas");
    };
    });
  });
 
 // wrap poetry in pre
 var poetryparaslist = poetryparas.join(", ");
-var notpoetryparaslist = "*:not(" + poetryparaslist + ")";
+var notpoetryparaslist = "p:not(" + poetryparaslist + ")";
 
 poetryparas.forEach(function ( val ) {
    $( val ).each(function() {
    var thisparent = $(this).parent();
-   console.log(thisparent[0].tagName);
-   if (thisparent[0].tagName !== 'PRE') {
-     var thisblock = $(this).nextUntil(notpoetryparaslist).addBack();
+   var parentEl = thisparent[0].tagName.toLowerCase();
+   if (parentEl !== 'pre') {
+     var prevblock = $($(this).prevUntil(notpoetryparaslist).get().reverse());
+     var nextblock = $(this).nextUntil(notpoetryparaslist).addBack();
      var newpre = $("<pre/>").addclass("poetry").addClass("temp");
      $(this).before(newpre);
      var node = $(".temp");
-     node.append(thisblock);
+     node.append(prevblock);
+     node.append(nextblock);
      $(".temp").removeClass("temp");
    };
    });
@@ -218,18 +240,20 @@ poetryparas.forEach(function ( val ) {
 
 // wrap boxes in aside
 var boxparaslist = boxparas.join(", ");
-var notboxparaslist = "*:not(" + boxparaslist + ")";
+var notboxparaslist = "p:not(" + boxparaslist + ")";
 
 boxparas.forEach(function ( val ) {
    $( val ).each(function() {
    var thisparent = $(this).parent();
-   console.log(thisparent[0].tagName);
-   if (thisparent[0].tagName !== 'ASIDE') {
-     var thisblock = $(this).nextUntil(notboxparaslist).addBack();
+   var parentEl = thisparent[0].tagName.toLowerCase();
+   if (parentEl !== 'aside') {
+     var prevblock = $($(this).prevUntil(notboxparaslist).get().reverse());
+     var nextblock = $(this).nextUntil(notboxparaslist).addBack();
      var newaside = $("<aside/>").attr("data-type", "sidebar").addClass("box").addClass("temp");
      $(this).before(newaside);
      var node = $(".temp");
-     node.append(thisblock);
+     node.append(prevblock);
+     node.append(nextblock);
      $(".temp").removeClass("temp");
    };
    });
@@ -237,18 +261,20 @@ boxparas.forEach(function ( val ) {
 
 // wrap sidebar in aside
 var sidebarparaslist = sidebarparas.join(", ");
-var notsidebarparaslist = "*:not(" + sidebarparaslist + ")";
+var notsidebarparaslist = "p:not(" + sidebarparaslist + ")";
 
 sidebarparas.forEach(function ( val ) {
    $( val ).each(function() {
    var thisparent = $(this).parent();
-   console.log(thisparent[0].tagName);
-   if (thisparent[0].tagName !== 'ASIDE') {
-     var thisblock = $(this).nextUntil(notsidebarparaslist).addBack();
+   var parentEl = thisparent[0].tagName.toLowerCase();
+   if (parentEl !== 'aside') {
+     var prevblock = $($(this).prevUntil(notsidebarparaslist).get().reverse());
+     var nextblock = $(this).nextUntil(notsidebarparaslist).addBack();
      var newaside = $("<aside/>").attr("data-type", "sidebar").addClass("temp");
      $(this).before(newaside);
      var node = $(".temp");
-     node.append(thisblock);
+     node.append(prevblock);
+     node.append(nextblock);
      $(".temp").removeClass("temp");
    };
    });
