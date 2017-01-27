@@ -37,6 +37,22 @@ var extractparas = [".Extractext",
                     ".Extract-Inscriptionins",
                     ".Extract-ScheduleofEventssch"];
 
+var epigraphparas = [".PartEpigraph-non-versepepi",
+                    ".PartEpigraph-versepepiv",
+                    ".PartEpigraphSourcepeps",
+                    ".ChapEpigraph-non-versecepi",
+                    ".ChapEpigraph-versecepiv",
+                    ".ChapEpigraphSourceceps",
+                    ".FMEpigraph-non-versefmepi",
+                    ".FMEpigraph-versefmepiv",
+                    ".FMEpigraphSourcefmeps",
+                    ".Epigraph-non-verseepi",
+                    ".Epigraph-verseepiv",
+                    ".EpigraphSourceeps",
+                    ".EpigraphinText-non-versetepi",
+                    ".EpigraphinText-versetepiv",
+                    ".EpigraphinText-Sourceteps"];
+
 var omitparas = [".PageBreakpb",
                  ".SectionBreaksbr",
                  ".PartStartpts",
@@ -65,7 +81,7 @@ for (var k in toplevelheads) {
 
 // wrap extracts in blockquote
 var extractparaslist = extractparas.join(", ");
-var notextractparaslist = "*:not(" +extractparaslist + ")";
+var notextractparaslist = "*:not(" + extractparaslist + ")";
 
 extractparas.forEach(function ( val ) {
    $( val ).each(function() {
@@ -74,6 +90,25 @@ extractparas.forEach(function ( val ) {
    if (thisparent[0].tagName !== 'BLOCKQUOTE') {
      var thisblock = $(this).nextUntil(notextractparaslist).addBack();
      var newblockquote = $("<blockquote/>").addClass("temp");
+     $(this).before(newblockquote);
+     var node = $(".temp");
+     node.append(thisblock);
+     $(".temp").removeClass("temp");
+   };
+   });
+ });
+
+// wrap epigraphs in blockquote
+var epigraphparaslist = epigraphparas.join(", ");
+var notepigraphparaslist = "*:not(" + epigraphparaslist + ")";
+
+epigraphparas.forEach(function ( val ) {
+   $( val ).each(function() {
+   var thisparent = $(this).parent();
+   console.log(thisparent[0].tagName);
+   if (thisparent[0].tagName !== 'BLOCKQUOTE') {
+     var thisblock = $(this).nextUntil(notepigraphparaslist).addBack();
+     var newblockquote = $("<blockquote/>").attr("data-type", "epigraph").addClass("temp");
      $(this).before(newblockquote);
      var node = $(".temp");
      node.append(thisblock);
