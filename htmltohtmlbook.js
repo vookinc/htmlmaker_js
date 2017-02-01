@@ -188,7 +188,7 @@ var omitparas = [".PageBreakpb",
 // wrap content in main sections
 
 function makeNot(list) {
-  return "body:not(" + list + "), section:not(" + list + "), div:not(" + list + "), blockquote:not(" + list + "), pre:not(" + list + "), aside:not(" + list + "), p:not(" + list + ")";
+  return "body:not(" + list + "), section:not(" + list + "), div:not(" + list + "), blockquote:not(" + list + "), pre:not(" + list + "), aside:not(" + list + "), p:not(" + list + "), li:not(" + list + ")";
 }
 
 //function to replace element, keeping innerHtml & attributes
@@ -201,31 +201,6 @@ function makeNot(list) {
       });
     });
   }
-
-function makeLists(selector, list, listtype) {
-  var listparaslist = list.join(", ");
-  var notlistparaslist = makeNot(listparaslist);
-
-  list.forEach(function ( val ) {
-    thisselector = selector + " " + val;
-    $(thisselector).each(function() {
-    var thisparent = $(this).parent();
-    var parentEl = thisparent[0].tagName.toLowerCase();
-    if (parentEl !== "li") {
-      var prevblock = $($(this).prevUntil(notlistparaslist).get().reverse());
-      var nextblock = $(this).nextUntil(notlistparaslist).addBack();
-      var newlisttag = "<" + listtype + "/>";
-      var newlist = $(newlisttype).addClass("templist");
-      $(this).before(newlist);
-      var node = $(".templist");
-      node.append(prevblock);
-      node.append(nextblock);
-      $(".templist > p").wrap("li");
-      $(".templist").removeClass("templist");
-    };
-    });
-  });
-}
 
 var toplevelheadsarr = [];
 
@@ -354,16 +329,69 @@ sidebarparas.forEach(function ( val ) {
 // convert list paras to real lists;
 // must occur after all the other parents are added
 
-function makeLists(listparas, listtype) {
-  var listparaslist = listparas.join(", ");
-  var notlistparaslist = makeNot(listparaslist);
+function makeListItems(unorderedlistparas, orderedlistparas, unorderedsublistparas, orderedsublistparas) {
+  var alllists = unorderedlistparas.concat(orderedlistparas).concat(orderedsublistparas).concat(unorderedsublistparas);
+  var listparasli = [];
+  
+  alllists.forEach(function ( val ) {
+    $( val ).each(function() {
+      var thisclass = $(this).attr("class");
+      $(this).wrap( "<li class=" + thisclass + "></li>" );
+    });
+  });
+}
 
+function makeSubLists(sublistparas, sublisttype) {
+  var sublistparaslist = sublistparas.join(", ");
+  var notsublistparaslist = makeNot(sublistparaslist);
+  var sublistparasli = [];
+
+  sublistparas.forEach(function ( val ) {
+    var thisLI = "li" + val;
+    sublistparasli.push(thisLI);
+  });
+  
+  sublistparasli.forEach(function ( val ) {
+    $( val ).each(function() {
+    var thisparentclass = $(this).parent().attr("class").toLowerCase();
+      if (thisparentclass !== "sublist") {
+      var prevblock = $($(this).prevUntil(notsublistparaslist).get().reverse());
+      var nextblock = $(this).nextUntil(notsublistparaslist).addBack();
+      var newlisttag = "<" + sublisttype + "/>";
+      var newlist = $(newlisttag).addClass("sublist").addClass("tempsublist");
+      $(this).before(newlist);
+      var subnode = $(".tempsublist");
+      subnode.append(prevblock);
+      subnode.append(nextblock);
+      $(".tempsublist").removeClass("tempsublist");
+    };
+    });
+  });
+  
+  $("li + .sublist").each(function() {
+    var newparent = $(this).prev();
+    newparent.append(this);
+  });
+}
+
+// second iteration
+function makeLists(listparas, listtype, unorderedsublistparas, orderedsublistparas) {
+  var listparaslist = listparas.join(", ");
+  var alllists = listparas.concat(orderedsublistparas).concat(unorderedsublistparas);
+  var alllistparaslist = alllists.join(", ");
+  var notlistparaslist = makeNot(alllistparaslist);
+  var listparasli = [];
+  
   listparas.forEach(function ( val ) {
+    var thisLI = "li" + val;
+    listparasli.push(thisLI);
+  });
+
+  listparasli.forEach(function ( val ) {
     $( val ).each(function() {
     var thisparent = $(this).parent();
     var parentEl = thisparent[0].tagName.toLowerCase();
-    console.log(thisparent[0].tagName);
-      if (parentEl !== listtype) {
+    if (parentEl !== listtype) {
       var prevblock = $($(this).prevUntil(notlistparaslist).get().reverse());
       var nextblock = $(this).nextUntil(notlistparaslist).addBack();
       var newlisttag = "<" + listtype + "/>";
@@ -375,39 +403,17 @@ function makeLists(listparas, listtype) {
       $(".templist").removeClass("templist");
     };
     });
-    $( val ).wrap( "<li></li>" );
   });
+  
 }
 
-makeLists(unorderedlistparas, "ul");
-makeLists(orderedlistparas, "ol");
+makeListItems(unorderedlistparas, orderedlistparas, unorderedsublistparas, orderedsublistparas);
 
-function makeSubLists(listparas, listtype) {
-  var listparaslist = listparas.join(", ");
-  var notlistparaslist = makeNot(listparaslist);
+makeLists(unorderedlistparas, "ul", unorderedsublistparas, orderedsublistparas);
+makeLists(orderedlistparas, "ol", unorderedsublistparas, orderedsublistparas);
 
-  listparas.forEach(function ( val ) {
-    $( val ).each(function() {
-    var thisparent = $(this).parent();
-    var parentEl = thisparent[0].tagName.toLowerCase();
-    console.log(thisparent[0].tagName);
-      if (parentEl !== listtype) {
-      var prevblock = $($(this).prevUntil(notlistparaslist).get().reverse());
-      var nextblock = $(this).nextUntil(notlistparaslist).addBack();
-      var newlisttag = "<" + listtype + "/>";
-      var newlist = $(newlisttag).addClass("tempsublist");
-      $(this).before(newlist);
-      var node = $(".tempsublist");
-      node.append(prevblock);
-      node.append(nextblock);
-      $(".tempsublist").removeClass("tempsublist");
-    };
-    });
-  });
-}
-
-makeLists(unorderedsublistparas, "ul");
-makeLists(orderedsublistparas, "ol");
+makeSubLists(unorderedsublistparas, "ul");
+makeSubLists(orderedsublistparas, "ol");
 
 // wrap illustrations in figure parent
 
