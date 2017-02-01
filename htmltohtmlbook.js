@@ -166,9 +166,11 @@ var sidebarparas = [".SidebarHeadsbh",
                     ".SidebarSourceNotesbsn",
                     ".SidebarFootnotesbfn"];
 
-var illustrationparas = [""];
+var illustrationparas = [".Captioncap",
+                         ".Illustrationholderill",
+                         ".IllustrationSourceis"];
 
-var imageholders = [""];
+var imageholders = [".Illustrationholderill"];
 
 var unorderedlistparas = [".SidebarListBulletsbbl"];
 
@@ -326,6 +328,44 @@ sidebarparas.forEach(function ( val ) {
    });
  });
 
+function makeImgTag() {
+  tk
+}
+
+// wrap illustrations in figure parent
+var illustrationparaslist = illustrationparas.join(", ");
+var notillustrationparaslist = makeNot(illustrationparaslist);
+
+illustrationparas.forEach(function ( val ) {
+   $( val ).each(function() {
+   var thisparent = $(this).parent();
+   var parentEl = thisparent[0].tagName.toLowerCase();
+   if (parentEl !== 'aside') {
+     var prevblock = $($(this).prevUntil(notsidebarparaslist).get().reverse());
+     var nextblock = $(this).nextUntil(notsidebarparaslist).addBack();
+     var newaside = $("<figure/>").addClass("Illustrationholderill").addClass("figtemp");
+     $(this).before(newaside);
+     var node = $(".figtemp");
+     node.append(prevblock);
+     node.append(nextblock);
+     $(".figtemp").removeClass("figtemp");
+   };
+   });
+ });
+
+// create img tags
+var imagelist = imageholders.join(", ");
+var imagelistselector = $(imagelist);
+
+imagelistselector.each(function(){
+    var myAttr = $(this).attr();
+    var myHtml = $(this).html();
+    var mySrc = "images/" + myHtml;
+    $(this).replaceWith(function(){
+        return $("<img/>").html(myHtml).attr(myAttr).attr("src", mySrc);
+    });
+  });
+
 // convert list paras to real lists;
 // must occur after all the other parents are added
 
@@ -414,8 +454,6 @@ makeLists(orderedlistparas, "ol", unorderedsublistparas, orderedsublistparas);
 
 makeSubLists(unorderedsublistparas, "ul");
 makeSubLists(orderedsublistparas, "ol");
-
-// wrap illustrations in figure parent
 
 // create heading tags
 var headingslist = headingparas.join(", ");
