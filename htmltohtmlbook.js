@@ -168,17 +168,29 @@ var sidebarparas = [".SidebarHeadsbh",
 
 var illustrationparas = [".Captioncap",
                          ".Illustrationholderill",
-                         ".IllustrationSourceis"];
+                         ".IllustrationSourceis",
+                         ".IllustrationCreditsTextilctx",
+                         ".IllustrationCreditsTextNo-Indentilctx1"];
 
 var imageholders = [".Illustrationholderill"];
 
-var unorderedlistparas = [".SidebarListBulletsbbl"];
+var unorderedlistparas = [".AppendixListBulletapbl",
+                          ".BoxListBulletbbl",
+                          ".Extract-BulletListextbl",
+                          ".ListBulletbl",
+                          ".SidebarListBulletsbbl"];
 
-var orderedlistparas = [".SidebarListBulletsbbl"];
+var orderedlistparas = [".AppendixListNumapnl",
+                        ".BoxListNumbnl",
+                        ".Extract-NumListextnl",
+                        ".ListAlphaal",
+                        ".ListNumnl",
+                        ".SidebarListNumsbnl"];
 
-var unorderedsublistparas = [""];
+var unorderedsublistparas = [".ListBulletSubentrybsl"];
 
-var orderedsublistparas = [""];
+var orderedsublistparas = [".ListAlphaSubentryasl",
+                           ".ListNumSubentrynsl"];
 
 var omitparas = [".PageBreakpb",
                  ".SectionBreaksbr",
