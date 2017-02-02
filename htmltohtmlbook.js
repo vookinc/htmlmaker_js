@@ -15,6 +15,8 @@ toplevelheads['.ChapTitlect'] = "chapter";
 toplevelheads['.BMHeadbmh'] = "appendix";
 toplevelheads['.AdCardMainHeadacmh'] = "preface";
 
+var partheads = [".PartTitlept"];
+
 var headingparas = [".BMHeadbmh",
                     ".BMHeadNonprintingbmhnp",
                     ".BMHeadALTabmh",
@@ -216,6 +218,22 @@ function makeNot(list) {
     });
   }
 
+// add part-level divs
+var partsheadslist = partheads.join(", ");
+
+partheads.forEach(function ( val ) {
+  $( val ).each(function() {
+    var nextsiblings = $(this).nextUntil(partheadslist).addBack();
+    var newdiv = $("<div/>").attr("data-type", "part").addClass("parttemp");
+    $(this).before(newdiv);
+    var node = $(".parttemp");
+    node.append(nextsiblings);
+    $(".parttemp").removeClass("parttemp");
+  });
+});
+
+// add chapter-level sections
+
 var toplevelheadsarr = [];
 
 for (var k in toplevelheads) {
@@ -226,12 +244,12 @@ var toplevelheadslist = toplevelheadsarr.join(", ");
 
 for (var k in toplevelheads) {
   $( k ).each(function() {
-      var nextsiblings = $(this).nextUntil(toplevelheadslist).addBack();
-      var newsection = $("<section/>").attr("data-type", toplevelheads[k]).addClass("temp");
-      $(this).before(newsection);
-      var node = $(".temp");
-      node.append(nextsiblings);
-      $(".temp").removeClass("temp");
+    var nextsiblings = $(this).nextUntil(toplevelheadslist).addBack();
+    var newsection = $("<section/>").attr("data-type", toplevelheads[k]).addClass("temp");
+    $(this).before(newsection);
+    var node = $(".temp");
+    node.append(nextsiblings);
+    $(".temp").removeClass("temp");
   });
 };
 
