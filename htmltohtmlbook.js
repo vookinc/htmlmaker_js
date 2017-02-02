@@ -11,9 +11,17 @@ fs.readFile(file, function editContent (err, contents) {
 // key = class name to select
 // value = data-type to assign to new section
 var toplevelheads = {};
-toplevelheads['.ChapTitlect'] = "chapter";
-toplevelheads['.BMHeadbmh'] = "appendix";
+toplevelheads['.FMHeadfmh'] = "preface";
+toplevelheads['.FMHeadNonprintingfmhnp'] = "preface";
+toplevelheads['.FMHeadALTafmh'] = "preface";
+toplevelheads['.FrontSalesTitlefst'] = "preface";
 toplevelheads['.AdCardMainHeadacmh'] = "preface";
+toplevelheads['.PartTitlept'] = "part";
+toplevelheads['.ChapTitlect'] = "chapter";
+toplevelheads['.ChapTitleALTact'] = "chapter";
+toplevelheads['.ChapTitleNonprintingctnp'] = "chapter";
+toplevelheads['.BMHeadbmh'] = "appendix";
+toplevelheads['.BOBAdTitlebobt'] = "appendix";
 
 var partheads = [".PartTitlept"];
 
@@ -176,6 +184,8 @@ var illustrationparas = [".Captioncap",
 
 var imageholders = [".Illustrationholderill"];
 
+var illustrationsrcparas = [".IllustrationSourceis"];
+
 var unorderedlistparas = [".AppendixListBulletapbl",
                           ".BoxListBulletbbl",
                           ".Extract-BulletListextbl",
@@ -204,7 +214,7 @@ var omitparas = [".PageBreakpb",
 // wrap content in main sections
 
 function makeNot(list) {
-  return "body:not(" + list + "), section:not(" + list + "), div:not(" + list + "), blockquote:not(" + list + "), pre:not(" + list + "), aside:not(" + list + "), p:not(" + list + "), li:not(" + list + ")";
+  return "body:not(" + list + "), section:not(" + list + "), div:not(" + list + "), blockquote:not(" + list + "), h1:not(" + list + "), pre:not(" + list + "), aside:not(" + list + "), p:not(" + list + "), li:not(" + list + "), figure:not(" + list + ")";
 }
 
 //function to replace element, keeping innerHtml & attributes
@@ -218,19 +228,21 @@ function makeNot(list) {
     });
   }
 
+// leave this commented until we're ready to add real part handling. 
+// Currently we're just putting div.part at the same level as other sections.
 // add part-level divs
-var partsheadslist = partheads.join(", ");
+// var partheadslist = partheads.join(", ");
 
-partheads.forEach(function ( val ) {
-  $( val ).each(function() {
-    var nextsiblings = $(this).nextUntil(partheadslist).addBack();
-    var newdiv = $("<div/>").attr("data-type", "part").addClass("parttemp");
-    $(this).before(newdiv);
-    var node = $(".parttemp");
-    node.append(nextsiblings);
-    $(".parttemp").removeClass("parttemp");
-  });
-});
+// partheads.forEach(function ( val ) {
+//   $( val ).each(function() {
+//     var nextsiblings = $(this).nextUntil(partheadslist).addBack();
+//     var newdiv = $("<div/>").attr("data-type", "part").addClass("parttemp");
+//     $(this).before(newdiv);
+//     var node = $(".parttemp");
+//     node.append(nextsiblings);
+//     $(".parttemp").removeClass("parttemp");
+//   });
+// });
 
 // add chapter-level sections
 
@@ -245,7 +257,11 @@ var toplevelheadslist = toplevelheadsarr.join(", ");
 for (var k in toplevelheads) {
   $( k ).each(function() {
     var nextsiblings = $(this).nextUntil(toplevelheadslist).addBack();
-    var newsection = $("<section/>").attr("data-type", toplevelheads[k]).addClass("temp");
+    var newTag = "<section/>";
+    if (toplevelheads[k] == "part") {
+      newTag = "<div/>"
+    };
+    var newsection = $(newTag).attr("data-type", toplevelheads[k]).addClass("temp");
     $(this).before(newsection);
     var node = $(".temp");
     node.append(nextsiblings);
@@ -358,23 +374,24 @@ sidebarparas.forEach(function ( val ) {
    });
  });
 
-function makeImgTag() {
-  tk
-}
-
 // wrap illustrations in figure parent
+// assumes only one actual image per figure;
+// only adds figure if an image is referenced;
+// (i.e., will not wrap solo caption and source paras)
+var imageholderslist = imageholders.join(", ");
 var illustrationparaslist = illustrationparas.join(", ");
 var notillustrationparaslist = makeNot(illustrationparaslist);
+notillustrationparaslist = notillustrationparaslist + ", " + imageholderslist;
 
-illustrationparas.forEach(function ( val ) {
+imageholders.forEach(function ( val ) {
    $( val ).each(function() {
    var thisparent = $(this).parent();
    var parentEl = thisparent[0].tagName.toLowerCase();
-   if (parentEl !== 'aside') {
-     var prevblock = $($(this).prevUntil(notsidebarparaslist).get().reverse());
-     var nextblock = $(this).nextUntil(notsidebarparaslist).addBack();
-     var newaside = $("<figure/>").addClass("Illustrationholderill").addClass("figtemp");
-     $(this).before(newaside);
+   if (parentEl !== 'figure') {
+     var prevblock = $($(this).prevUntil(notillustrationparaslist).get().reverse());
+     var nextblock = $(this).nextUntil(notillustrationparaslist).addBack();
+     var newfigure = $("<figure/>").addClass("Illustrationholderill").addClass("figtemp");
+     $(this).before(newfigure);
      var node = $(".figtemp");
      node.append(prevblock);
      node.append(nextblock);
@@ -385,16 +402,22 @@ illustrationparas.forEach(function ( val ) {
 
 // create img tags
 var imagelist = imageholders.join(", ");
-var imagelistselector = $(imagelist);
+var imagelistselector = $("p" + imagelist);
 
 imagelistselector.each(function(){
-    var myAttr = $(this).attr();
-    var myHtml = $(this).html();
-    var mySrc = "images/" + myHtml;
+    var myID = $(this).attr("id");
+    var mySrc = "images/" + $(this).text();
+    var myAlt = $(this).text();
+    $(this).parent().attr("id", myID);
     $(this).replaceWith(function(){
-        return $("<img/>").html(myHtml).attr(myAttr).attr("src", mySrc);
+        return $("<img/>").attr("src", mySrc).attr("alt", myAlt);
     });
   });
+
+// add illustration src link placeholders
+var illustrationsrclist = illustrationsrcparas.join(", ");
+
+$(illustrationsrclist).contents().wrap('<a class="fig-link"></a>');
 
 // convert list paras to real lists;
 // must occur after all the other parents are added
