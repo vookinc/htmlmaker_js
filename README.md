@@ -15,5 +15,11 @@ $ htmlmaker docx-path output-dir styles.json style-functions.js
 Convert HTML to HTMLBook:
 
 ```
-$ node htmltohtmlbook.js
+$ node htmltohtmlbook.js output-dir/docx-name.html
+```
+
+Generate linked nav for the new html:
+
+```
+$ node generateTOC.js output-dir/docx-name.html
 ```
