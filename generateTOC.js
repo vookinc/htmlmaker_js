@@ -30,7 +30,7 @@ var headingparas = [".BMHeadbmh",
                     ".FMHeadNonprintingfmhnp",
                     ".FMHeadALTafmh",
                     //".FrontSalesTitlefst",
-                    ".BOBAdTitlebobt",
+                    //".BOBAdTitlebobt",
                     //".AdCardMainHeadacmh",
                     //".TitlepageBookTitletit",
                     //".HalftitleBookTitlehtit"
