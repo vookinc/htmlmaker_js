@@ -530,6 +530,25 @@ headingslistselector.each(function(){
     });
   });
 
+// creating the header block;
+// this relies on the h1 tags that are created previously
+$("section, div[data-type='part']").each(function(){
+  var myTitle = $(this).children("h1").first().clone();
+  var myType = $(this).attr("data-type");
+  // capitalize the data-type value
+  // to potentially be used as the heading text
+  myType = myType.toLowerCase().replace(/-/g, " ").replace(/\b[a-z]/g, function(letter) {
+    return letter.toUpperCase();
+  });
+  // if no h1 exists within the section
+  // use the data-type value as the heading text
+  if (myTitle[0] === undefined) {
+    myTitle = "<h1>" + myType + "</h1>";
+  }
+  var newHeader = $("<header/>").prepend(myTitle);
+  $(this).prepend(newHeader);
+});
+
 // removing unneccessary paras. 
 // THIS NEEDS TO HAPPEN LAST
 
