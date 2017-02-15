@@ -184,6 +184,8 @@ var illustrationparas = [".Captioncap",
 
 var imageholders = [".Illustrationholderill"];
 
+var captionparas = [".Captioncap"];
+
 var illustrationsrcparas = [".IllustrationSourceis"];
 
 var unorderedlistparas = [".AppendixListBulletapbl",
@@ -400,17 +402,20 @@ imageholders.forEach(function ( val ) {
    });
  });
 
-// create img tags
+// create img tags after figure parent has been added
 var imagelist = imageholders.join(", ");
 var imagelistselector = $("p" + imagelist);
+
+var captionlist = captionparas.join(", ");
 
 imagelistselector.each(function(){
     var myID = $(this).attr("id");
     var mySrc = "images/" + $(this).text();
-    var myAlt = $(this).text();
+    var myCaption = $(this).siblings(captionlist).text();
+    myCaption = encodeURI(myCaption);
     $(this).parent().attr("id", myID);
     $(this).replaceWith(function(){
-        return $("<img/>").attr("src", mySrc).attr("alt", myAlt);
+        return $("<img/>").attr("src", mySrc).attr("alt", myCaption);
     });
   });
 
