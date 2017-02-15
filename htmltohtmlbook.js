@@ -533,7 +533,7 @@ headingslistselector.each(function(){
 // creating the header block;
 // this relies on the h1 tags that are created previously
 $("section, div[data-type='part']").each(function(){
-  var myTitle = $(this).children("h1").first().clone();
+  var myTitle = $(this).children("h1").first().clone().removeAttr("class").removeAttr("id");
   var myType = $(this).attr("data-type");
   // capitalize the data-type value
   // to potentially be used as the heading text
