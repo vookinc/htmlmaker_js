@@ -412,7 +412,12 @@ imagelistselector.each(function(){
     var myID = $(this).attr("id");
     var mySrc = "images/" + $(this).text();
     var myCaption = $(this).siblings(captionlist).text();
-    myCaption = encodeURI(myCaption);
+    if (!myCaption) {
+      myCaption = $(this).text();
+    } else {
+      myCaption = encodeURI(myCaption);
+    }
+    var myAlt = $(this).text();
     $(this).parent().attr("id", myID);
     $(this).replaceWith(function(){
         return $("<img/>").attr("src", mySrc).attr("alt", myCaption);
