@@ -42,7 +42,9 @@ var headingparas = [".BMHeadbmh",
                     ".BOBAdTitlebobt",
                     ".AdCardMainHeadacmh",
                     ".TitlepageBookTitletit",
-                    ".HalftitleBookTitlehtit"];
+                    ".HalftitleBookTitlehtit",
+                    ".VolumeNumbervoln",
+                    ".VolumeTitlevolt"];
 
 var extractparas = [".Extractext",
                     ".ExtractSourceexts",
