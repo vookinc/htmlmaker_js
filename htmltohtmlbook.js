@@ -281,9 +281,12 @@ var toplevelheadsarr = [];
 for (var k in toplevelheads) {
   toplevelheadsarr.push(k);
 };
-  
+
+// combine our list of section dividers with the
+// default htmlbook dividers
 var alltoplevelsections = toplevelheadsarr.concat(htmlbooksections);
 
+// make a selector string that includes all section dividers
 var toplevelheadslist = alltoplevelsections.join(", ");
 
 for (var k in toplevelheads) {
@@ -406,7 +409,7 @@ sidebarparas.forEach(function ( val ) {
    });
  });
 
-// wrap illustrations in figure parent
+// wrap illustrations in figure parent;
 // assumes only one actual image per figure;
 // only adds figure if an image is referenced;
 // (i.e., will not wrap solo caption and source paras)
