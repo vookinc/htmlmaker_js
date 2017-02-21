@@ -289,6 +289,8 @@ var alltoplevelsections = toplevelheadsarr.concat(htmlbooksections);
 // make a selector string that includes all section dividers
 var toplevelheadslist = alltoplevelsections.join(", ");
 
+// loop through each divider paragraph and 
+// create a parent section around it
 for (var k in toplevelheads) {
   $( k ).each(function() {
     var nextsiblings = $(this).nextUntil(toplevelheadslist).addBack();
@@ -303,6 +305,11 @@ for (var k in toplevelheads) {
     $(".temp").removeClass("temp");
   });
 };
+
+// remove the old divider paragraphs
+toplevelheadsarr.forEach(function ( val ) {
+  $( val ).remove();
+});
 
 // wrap extracts in blockquote
 var extractparaslist = extractparas.join(", ");
