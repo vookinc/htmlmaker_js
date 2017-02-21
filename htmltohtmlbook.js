@@ -7,23 +7,49 @@ fs.readFile(file, function editContent (err, contents) {
           xmlMode: true
         });
 
+// the default list of htmlbook top-level sections
+var htmlbooksections = ["body[data-type='book']",
+                        "section[data-type='chapter']",
+                        "div[data-type='part']",
+                        "section[data-type='appendix']",
+                        "section[data-type='afterword']",
+                        "section[data-type='bibliography']",
+                        "section[data-type='glossary']",
+                        "section[data-type='preface']",
+                        "section[data-type='foreword']",
+                        "section[data-type='introduction']",
+                        "section[data-type='halftitlepage']",
+                        "section[data-type='titlepage']",
+                        "section[data-type='copyright-page']",
+                        "section[data-type='colophon']",
+                        "section[data-type='acknowledgments']",
+                        "section[data-type='conclusion']",
+                        "section[data-type='dedication']",
+                        "nav[data-type='toc']",
+                        "section[data-type='index']"];
+
 // adding values to the list of section-start styles
 // key = class name to select
 // value = data-type to assign to new section
 var toplevelheads = {};
-toplevelheads['.FMHeadfmh'] = "preface";
-toplevelheads['.FMHeadNonprintingfmhnp'] = "preface";
-toplevelheads['.FMHeadALTafmh'] = "preface";
-toplevelheads['.FrontSalesTitlefst'] = "preface";
-toplevelheads['.AdCardMainHeadacmh'] = "preface";
-toplevelheads['.PartTitlept'] = "part";
-toplevelheads['.ChapTitlect'] = "chapter";
-toplevelheads['.ChapTitleALTact'] = "chapter";
-toplevelheads['.ChapTitleNonprintingctnp'] = "chapter";
-toplevelheads['.BMHeadbmh'] = "appendix";
-toplevelheads['.BOBAdTitlebobt'] = "appendix";
+toplevelheads['.Section-Ad-Cardssac'] = "preface";
+toplevelheads['.Section-Blank-Pagessblank'] = "preface";
+toplevelheads['.Section-Titlepagesstit'] = "titlepage";
+toplevelheads['.Section-Copyright-Pagesscr'] = "copyright-page";
+toplevelheads['.Section-Dedicationssded'] = "dedication";
+toplevelheads['.Section-Epigraphssepi'] = "preface";
+toplevelheads['.Section-Contentssstoc'] = "preface";
+toplevelheads['.Section-Halftitlesshtit'] = "halftitlepage";
+toplevelheads['.Section-Forewordssfw'] = "foreword";
+toplevelheads['.Section-Introduction-frontmatterssif'] = "introduction";
+toplevelheads['.Section-Acknowledgmentsssack'] = "acknowledgments";
+toplevelheads['.Section-Chaptersschap'] = "chapter";
+toplevelheads['.Section-Appendixssapp'] = "appendix";
+toplevelheads['.Section-Notesssnotes'] = "appendix";
+toplevelheads['.Section-About-Authorssata'] = "appendix";
+toplevelheads['.Section-Partsspart'] = "part";
 
-var partheads = [".PartTitlept"];
+var partheads = [".Section-Partsspart"];
 
 var headingparas = [".BMHeadbmh",
                     ".BMHeadNonprintingbmhnp",
@@ -255,8 +281,10 @@ var toplevelheadsarr = [];
 for (var k in toplevelheads) {
   toplevelheadsarr.push(k);
 };
+  
+var alltoplevelsections = toplevelheadsarr.concat(htmlbooksections);
 
-var toplevelheadslist = toplevelheadsarr.join(", ");
+var toplevelheadslist = alltoplevelsections.join(", ");
 
 for (var k in toplevelheads) {
   $( k ).each(function() {
