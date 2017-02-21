@@ -234,6 +234,8 @@ var unorderedsublistparas = [".ListBulletSubentrybsl"];
 var orderedsublistparas = [".ListAlphaSubentryasl",
                            ".ListNumSubentrynsl"];
 
+var footnotetextselector = ["div.footnote"];
+
 var omitparas = [".PageBreakpb",
                  ".SectionBreaksbr",
                  ".PartStartpts",
@@ -557,6 +559,32 @@ makeLists(orderedlistparas, "ol", unorderedsublistparas, orderedsublistparas);
 
 makeSubLists(unorderedsublistparas, "ul");
 makeSubLists(orderedsublistparas, "ol");
+
+// move footnotes inline
+var footnotelist = footnotetextselector.join(", ");
+var footnotelistselector = $(footnotelist);
+
+footnotelistselector.each(function () {
+  var notenumber = $(this).attr('data-noteref');
+  var node = $('span[id=footnote-' + notenumber + ']');
+  node.empty();
+  while (this.firstChild) {
+    node.append(this.firstChild);
+  };
+  node.removeClass().attr("data-type", "footnote");
+  $(this).remove();
+});
+
+// replace p tags in footnotes with span
+$("span[data-type='footnote'] p").each(function(){
+  var myAttr = $(this).attr();
+  var myHtml = $(this).html();
+  $(this).replaceWith(function(){
+      return $("<span/>").html(myHtml).attr(myAttr);
+  });
+});
+
+$('section.footnotes:empty').remove();
 
 // create heading tags
 var headingslist = headingparas.join(", ");
