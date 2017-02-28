@@ -24,9 +24,411 @@ Generate linked nav for the new html:
 $ node generateTOC.js output-dir/docx-name.html
 ```
 
-## Notes
+## HTML Conversion Notes
+
+The htmltohtmlbook conversion adds additional layers of conversion, based on the instructions provided in the styles_config.json file. This file dictates where section breaks should be inserted, where to add blockquote elements, pre elements, aside elements, etc. Here's a description of each currently-supported paragraph type that can be configured in the styles_config.json file, and what the output will look like.
+
+### Main Book Sections
+
+_JSON group:_ toplevelheads
+_HTML element:_ section or div (per HTMLBook spec)
+_data-type:_ from JSON
+_class: none_
+
+This group determines the elements or classes that mark the start of a new section, as well as the type of section that will be added. When the specified element is encountered, a new parent will be added based on the section type specified, and this parent will wrap around all subsequent children until another "toplevelheads" element is encountered (of any type).
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="Section-Titlepagesti" />
+<p class="TitlepageBookTitletit">Alice in Wonderland</p>
+<p class="Section-Dedicationsde" />
+<p class="Dedicationded">For Alice.</p>
+<p class="Section-Chapterscp" />
+<p class="ChapTitlect">Chapter 1: Down the Rabbit Hole</p>
+<p class="TextStandardtx">Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversation?'</p>
+```
+
+_Output HTML:_
+
+```html
+<section data-type="titlepage">
+<p class="TitlepageBookTitletit">Alice in Wonderland</p>
+</section>
+<section data-type="dedication">
+<p class="Dedicationded">For Alice.</p>
+</section>
+<section data-type="chapter">
+<p class="ChapTitlect">Chapter 1: Down the Rabbit Hole</p>
+<p class="TextStandardtx">Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversation?'</p>
+\[...\]
+```
+
+#### Sample 2
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="TitlepageBookTitletit">Alice in Wonderland</p>
+<p class="Dedicationded">For Alice.</p>
+<p class="ChapTitlect">Chapter 1: Down the Rabbit Hole</p>
+<p class="TextStandardtx">Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversation?'</p>
+```
+
+_Output HTML:_
+
+```html
+<section data-type="titlepage">
+  <p class="TitlepageBookTitletit">Alice in Wonderland</p>
+</section>
+<section data-type="dedication">
+  <p class="Dedicationded">For Alice.</p>
+</section>
+<section data-type="chapter">
+  <p class="ChapTitlect">Chapter 1: Down the Rabbit Hole</p>
+  <p class="TextStandardtx">Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversation?'</p>
+\[...\]
+```
+
+### Parts
+
+_JSON group:_ partheads
+_HTML element:_ div
+_data-type:_ part
+_class: none_
+
+This is used as an extra instruction to create a div rather than a section, when processing the toplevelheads paragraphs (see previous section).
+
+### Top-Level Headings
+
+_JSON group:_ headingparas
+_HTML element:_ h1
+_data-type: none_
+_class: none_
+
+Paragraphs that should be converted to h1 elements.
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="TitlepageBookTitletit">Alice in Wonderland</p>
+<p class="TitlepageAuthorau">Lewis Carroll</p>
+```
+
+_Output HTML:_
+
+```html
+<h1 class="TitlepageBookTitletit">Alice in Wonderland</h1>
+<p class="TitlepageAuthorau">Lewis Carroll</p>
+```
+
+### Extracts
+
+_JSON group:_ extractparas
+_HTML element:_ blockquote
+_data-type: none_
+_class: none_
+
+Paragraphs that should be wrapped in a blockquote parent. All contiguous paragraphs from this group will be wrapped in a single blockquote, until a non-extractparas element is encountered.
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="TextStandardtx">...'and how funny it'll seem, sending presents to one's own feet! And how odd the directions will look!</p>
+<p class="Extractext">ALICE’S RIGHT FOOT, ESQ.</p>
+<p class="Extractext">HEARTHRUG,</p>
+<p class="Extractext">NEAR THE FENDER,</p>
+<p class="Extractext">(WITH ALICE’S LOVE).</p>
+<p class="TextStandardtx">Oh dear, what nonsense I'm talking!'</p>
+```
+
+_Output HTML:_
+
+```html
+<p class="TextStandardtx">...'and how funny it'll seem, sending presents to one's own feet! And how odd the directions will look!</p>
+<blockquote>
+  <p class="Extractext">ALICE’S RIGHT FOOT, ESQ.</p>
+  <p class="Extractext">HEARTHRUG,</p>
+  <p class="Extractext">NEAR THE FENDER,</p>
+  <p class="Extractext">(WITH ALICE’S LOVE).</p>
+</blockquote>
+<p class="TextStandardtx">Oh dear, what nonsense I'm talking!'</p>
+```
+
+### Epigraphs
+
+_JSON group:_ epigraphparas
+_HTML element:_ blockquote
+_data-type:_ epigraph
+_class: none_
+
+Paragraphs that should be wrapped in a blockquote parent, which will be given an extra _data-type_ attribute of _epigraph_. All contiguous paragraphs from this group will be wrapped in a single blockquote, until a non-epigraphparas element is encountered.
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="ChapTitlect">Chapter 1</p>
+<p class="Epigraph-verseepiv">Did I request thee, Maker, from my clay</p>
+<p class="Epigraph-verseepiv">To mould me Man, did I solicit thee</p>
+<p class="Epigraph-verseepiv">From darkness to promote me?</p>
+<p class="EpigraphSourceeps">Paradise Lost, X, 743-45</p>
+<p class="TextStandardtx">I am by birth a Genevese, and my family is one of the most distinguished of that republic.</p>
+```
+
+_Output HTML:_
+
+```html
+<p class="ChapTitlect">Chapter 1</p>
+<blockquote data-type="epigraph">
+  <p class="Epigraph-verseepiv">Did I request thee, Maker, from my clay</p>
+  <p class="Epigraph-verseepiv">To mould me Man, did I solicit thee</p>
+  <p class="Epigraph-verseepiv">From darkness to promote me?</p>
+  <p class="EpigraphSourceeps">Paradise Lost, X, 743-45</p>
+</blockquote>
+<p class="TextStandardtx">I am by birth a Genevese, and my family is one of the most distinguished of that republic.</p>
+```
+
+### Poetry
+
+_JSON group:_ poetryparas
+_HTML element:_ pre
+_data-type: none_
+_class:_ poetry
+
+Paragraphs that should be wrapped in a pre parent, which will be given an extra _class_ attribute of _poetry_. All contiguous paragraphs from this group will be wrapped in a single blockquote, until a non-poetryparas element is encountered.
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="TextStandardtx">...and the words did not come the same as they used to do:–</p>
+<p class="VerseTextvtx">How doth the little crocodile</p>
+<p class="VerseTextvtx">Improve his shining tail,</p>
+<p class="VerseTextvtx">And pour the waters of the Nile</p>
+<p class="VerseTextvtx">On every golden scale!</p>
+<p class="VerseTextvtx">How cheerfully he seems to grin,</p>
+<p class="VerseTextvtx">How neatly spread his claws,</p>
+<p class="VerseTextvtx">And welcome little fishes in</p>
+<p class="VerseTextvtx">With gently smiling jaws!</p>
+<p class="TextStandardtx">'I'm sure those are not the right words,' said poor Alice</p>
+```
+
+_Output HTML:_
+
+```html
+<p class="TextStandardtx">...and the words did not come the same as they used to do:–</p>
+<pre class="poetry">
+  <p class="VerseTextvtx">How doth the little crocodile</p>
+  <p class="VerseTextvtx">Improve his shining tail,</p>
+  <p class="VerseTextvtx">And pour the waters of the Nile</p>
+  <p class="VerseTextvtx">On every golden scale!</p>
+  <p class="VerseTextvtx">How cheerfully he seems to grin,</p>
+  <p class="VerseTextvtx">How neatly spread his claws,</p>
+  <p class="VerseTextvtx">And welcome little fishes in</p>
+  <p class="VerseTextvtx">With gently smiling jaws!</p>
+</pre>
+<p class="TextStandardtx">'I'm sure those are not the right words,' said poor Alice</p>
+```
+
+### Sidebars
+
+_JSON group:_ sidebarparas
+_HTML element:_ aside
+_data-type:_ sidebar
+_class: none_
+
+Paragraphs that should be wrapped in an aside parent, with a _data-type_ attribute of _sidebar_. All contiguous paragraphs from this group will be wrapped in a single aside, until a non-boxparas element is encountered.
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
+<p class="SidebarHeadsbh">Special Information</p>
+<p class="SidebarTextNo-Indentsbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
+<p class="SidebarTextsbtx">This is some more text that describes the special information that people care about.</p>
+<p class="Text-Standardtx">Some text that follows a box.</p>
+```
+
+_Output HTML:_
+
+```html
+<p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
+<aside data-type="sidebar">
+  <p class="SidebarHeadsbh">Special Information</p>
+  <p class="SidebarTextNo-Indentsbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
+  <p class="SidebarTextsbtx">This is some more text that describes the special information that people care about.</p>
+</aside>
+<p class="Text-Standardtx">Some text that follows a box.</p>
+```
+
+### Boxes
+
+_JSON group:_ boxparas
+_HTML element:_ aside
+_data-type:_ sidebar
+_class:_ box
+
+Boxes are handled almost identically to sidebars; they are essentially another form of sidebar. These paragraphs will be wrapped in an aside parent, with a _data-type_ attribute of _sidebar_ and an extra _class_ attribute of _box_. All contiguous paragraphs from this group will be wrapped in a single aside, until a non-boxparas element is encountered.
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
+<p class="BoxHeadbh">Special Information</p>
+<p class="BoxTextNo-Indentbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
+<p class="BoxTextbtx">This is some more text that describes the special information that people care about.</p>
+<p class="Text-Standardtx">Some text that follows a box.</p>
+```
+
+_Output HTML:_
+
+```html
+<p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
+<aside data-type="sidebar" class="box">
+  <p class="BoxHeadbh">Special Information</p>
+  <p class="BoxTextNo-Indentbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
+  <p class="BoxTextbtx">This is some more text that describes the special information that people care about.</p>
+</aside>
+<p class="Text-Standardtx">Some text that follows a box.</p>
+```
+
+### Images
+
+_JSON group:_ illustrationparas
+_HTML element:_ figure
+_data-type: none_ 
+_class:_ Illustrationholderill
+
+This list collects all the different pieces that could be contained within a figure block. There are several components to a figure block: the image itself, any caption text, and any image source or credits. Because of the different layers of handling, there are 2 more paragraph groups for images:
+
+#### Image Holder
+
+_JSON group:_ imageholders
+_HTML element:_ img
+_data-type: none_
+_class: none_
+
+This is the paragraph holder for the actual image file. The text content of this paragraph should be the image filename only.
+
+#### Image Caption
+
+_JSON group:_ captionparas
+_HTML element:_ p
+_data-type: none_
+_class: none_
+
+While there is no special handling for the caption paragraph itself, this text will be used as the _alt_ attribute for the image, if both are present.
+
+#### Image Holder
+
+_JSON group:_ imageholders
+_HTML element:_ img
+_data-type: none_
+_class: none_
+
+This is the paragraph holder for the actual image file. The text content of this paragraph should be the image filename only.
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="Illustrationholderill">authorphoto.jpg</p>
+<p class="Captioncap">Portrait of the artist as a young woman.</p>
+<p class="IllustrationSourceis">Image courtesy of a photographer</p>
+```
+
+_Output HTML:_
+
+```html
+<figure id="d1e3488" class="Illustrationholderill">
+  <img src="images/authorphoto.jpg" alt="Portrait of the artist as a young woman."/>
+  <p class="Captioncap">Portrait of the artist as a young woman.</p>
+  <p class="IllustrationSourceis">Image courtesy of a photographer</p>
+</figure>
+```
+
+### Lists
+
+_JSON group:_ unorderedlistparas, orderedlistparas, unorderedsublistparas, orderedsublistparas
+_HTML element:_ ul, ol
+_data-type: none_
+_class: none_
+
+Two levels of lists are currently supported; use the "sublistparas" lists to select paragraphs that should be converted to nested lists within an existing list parent. Paragraphs matched by the list groups will be wrapped in _li_ elements, and all contiguous _li_ elements will be wrapped in a parent _ol_ or _ul_, as appropriate.
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="Text-Standardtx">Here is some text that preceds our list:</p>
+<p class="ListBulletbl">Bullet list item one</p>
+<p class="ListBulletbl">Second bullet list item</p>
+<p class="ListNumSubentrynsl">A nested numbered list</p>
+<p class="ListNumSubentrynsl">A second nested numbered list item</p>
+<p class="ListBulletbl">Third level-1 bullet list item</p>
+<p class="ListBulletbl">The fourth top-level list item</p>
+<p class="Text-Standardtx">And this text comes after the list.</p>
+```
+
+_Output HTML:_
+
+```html
+<p class="Text-Standardtx">Here is some text that preceds our list:</p>
+<ul>
+  <li class="ListBulletbl"><p class="ListBulletbl">Bullet list item one</p></li>
+  <li class="ListBulletbl"><p class="ListBulletbl">Second bullet list item</p>
+    <ol>
+      <li class="ListNumSubentrynsl"><p class="ListNumSubentrynsl">A nested numbered list</p></li>
+      <li class="ListNumSubentrynsl"><p class="ListNumSubentrynsl">A second nested numbered list item</p></li>
+    </ol>
+  </li>
+  <li class="ListBulletbl"><p class="ListBulletbl">Third level-1 bullet list item</p></li>
+  <li class="ListBulletbl"><p class="ListBulletbl">The fourth top-level list item</p></li>
+</ul>
+<p class="Text-Standardtx">And this text comes after the list.</p>
+```
 
 ### Footnotes
+
+_JSON group:_ footnotetextselector
+_HTML element:_ span
+_data-type: none_
+_class: none_
 
 When running the full conversion from .docx to HTMLBook, footnotes that are embedded in Word will be converted to our default markup, and then will be moved inline and converted to comply with the HTMLBook spec. If you are bypassing the Word conversion and submitting an HTML file to be converted to HTMLBook via the secondary conversion, then footnotes must conform to the following markup specification:
 
@@ -49,4 +451,18 @@ When running the full conversion from .docx to HTMLBook, footnotes that are embe
 
 ```html
 <p class="TextStandardtx">Macmillan Publishers is currently located in the Flatiron Building.<span id="footnote-1">1</span></p>
+```
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+```
+
+_Output HTML:_
+
+```html
 ```
