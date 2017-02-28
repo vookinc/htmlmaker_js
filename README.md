@@ -31,8 +31,11 @@ The htmltohtmlbook conversion adds additional layers of conversion, based on the
 ### Main Book Sections
 
 _JSON group:_ toplevelheads
+
 _HTML element:_ section or div (per HTMLBook spec)
+
 _data-type:_ from JSON
+
 _class: none_
 
 This group determines the elements or classes that mark the start of a new section, as well as the type of section that will be added. When the specified element is encountered, a new parent will be added based on the section type specified, and this parent will wrap around all subsequent children until another "toplevelheads" element is encountered (of any type).
@@ -99,8 +102,11 @@ _Output HTML:_
 ### Parts
 
 _JSON group:_ partheads
+
 _HTML element:_ div
+
 _data-type:_ part
+
 _class: none_
 
 This is used as an extra instruction to create a div rather than a section, when processing the toplevelheads paragraphs (see previous section).
@@ -108,8 +114,11 @@ This is used as an extra instruction to create a div rather than a section, when
 ### Top-Level Headings
 
 _JSON group:_ headingparas
+
 _HTML element:_ h1
+
 _data-type: none_
+
 _class: none_
 
 Paragraphs that should be converted to h1 elements.
@@ -135,8 +144,11 @@ _Output HTML:_
 ### Extracts
 
 _JSON group:_ extractparas
+
 _HTML element:_ blockquote
+
 _data-type: none_
+
 _class: none_
 
 Paragraphs that should be wrapped in a blockquote parent. All contiguous paragraphs from this group will be wrapped in a single blockquote, until a non-extractparas element is encountered.
@@ -172,8 +184,11 @@ _Output HTML:_
 ### Epigraphs
 
 _JSON group:_ epigraphparas
+
 _HTML element:_ blockquote
+
 _data-type:_ epigraph
+
 _class: none_
 
 Paragraphs that should be wrapped in a blockquote parent, which will be given an extra _data-type_ attribute of _epigraph_. All contiguous paragraphs from this group will be wrapped in a single blockquote, until a non-epigraphparas element is encountered.
@@ -209,8 +224,11 @@ _Output HTML:_
 ### Poetry
 
 _JSON group:_ poetryparas
+
 _HTML element:_ pre
+
 _data-type: none_
+
 _class:_ poetry
 
 Paragraphs that should be wrapped in a pre parent, which will be given an extra _class_ attribute of _poetry_. All contiguous paragraphs from this group will be wrapped in a single blockquote, until a non-poetryparas element is encountered.
@@ -254,8 +272,11 @@ _Output HTML:_
 ### Sidebars
 
 _JSON group:_ sidebarparas
+
 _HTML element:_ aside
+
 _data-type:_ sidebar
+
 _class: none_
 
 Paragraphs that should be wrapped in an aside parent, with a _data-type_ attribute of _sidebar_. All contiguous paragraphs from this group will be wrapped in a single aside, until a non-boxparas element is encountered.
@@ -289,8 +310,11 @@ _Output HTML:_
 ### Boxes
 
 _JSON group:_ boxparas
+
 _HTML element:_ aside
+
 _data-type:_ sidebar
+
 _class:_ box
 
 Boxes are handled almost identically to sidebars; they are essentially another form of sidebar. These paragraphs will be wrapped in an aside parent, with a _data-type_ attribute of _sidebar_ and an extra _class_ attribute of _box_. All contiguous paragraphs from this group will be wrapped in a single aside, until a non-boxparas element is encountered.
@@ -324,8 +348,11 @@ _Output HTML:_
 ### Images
 
 _JSON group:_ illustrationparas
+
 _HTML element:_ figure
+
 _data-type: none_ 
+
 _class:_ Illustrationholderill
 
 This list collects all the different pieces that could be contained within a figure block. There are several components to a figure block: the image itself, any caption text, and any image source or credits. Because of the different layers of handling, there are 2 more paragraph groups for images:
@@ -333,8 +360,11 @@ This list collects all the different pieces that could be contained within a fig
 #### Image Holder
 
 _JSON group:_ imageholders
+
 _HTML element:_ img
+
 _data-type: none_
+
 _class: none_
 
 This is the paragraph holder for the actual image file. The text content of this paragraph should be the image filename only.
@@ -342,8 +372,11 @@ This is the paragraph holder for the actual image file. The text content of this
 #### Image Caption
 
 _JSON group:_ captionparas
+
 _HTML element:_ p
+
 _data-type: none_
+
 _class: none_
 
 While there is no special handling for the caption paragraph itself, this text will be used as the _alt_ attribute for the image, if both are present.
@@ -351,8 +384,11 @@ While there is no special handling for the caption paragraph itself, this text w
 #### Image Holder
 
 _JSON group:_ imageholders
+
 _HTML element:_ img
+
 _data-type: none_
+
 _class: none_
 
 This is the paragraph holder for the actual image file. The text content of this paragraph should be the image filename only.
@@ -382,8 +418,11 @@ _Output HTML:_
 ### Lists
 
 _JSON group:_ unorderedlistparas, orderedlistparas, unorderedsublistparas, orderedsublistparas
+
 _HTML element:_ ul, ol
+
 _data-type: none_
+
 _class: none_
 
 Two levels of lists are currently supported; use the "sublistparas" lists to select paragraphs that should be converted to nested lists within an existing list parent. Paragraphs matched by the list groups will be wrapped in _li_ elements, and all contiguous _li_ elements will be wrapped in a parent _ol_ or _ul_, as appropriate.
@@ -426,8 +465,11 @@ _Output HTML:_
 ### Footnotes
 
 _JSON group:_ footnotetextselector
+
 _HTML element:_ span
+
 _data-type: none_
+
 _class: none_
 
 When running the full conversion from .docx to HTMLBook, footnotes that are embedded in Word will be converted to our default markup, and then will be moved inline and converted to comply with the HTMLBook spec. If you are bypassing the Word conversion and submitting an HTML file to be converted to HTMLBook via the secondary conversion, then footnotes must conform to the following markup specification:
