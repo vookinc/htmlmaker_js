@@ -345,13 +345,57 @@ _Output HTML:_
 <p class="Text-Standardtx">Some text that follows a box.</p>
 ```
 
+### Versatile Block Paragraphs
+
+_JSON group:_ versatileblockparas
+
+_HTML element: unchanged_
+
+_data-type: unchanged_
+
+_class: unchanged_
+
+Versatile Block Paragraphs are paragraphs that should be included in contiguous blocks of _any_ of the  block-types listed above: Extracts, Epigraphs, Poetry, Boxes, or Sidebars. Versatile Block Paragraphs at the beginning or end of a contiguous block are not included in the block.
+
+#### Sample 1
+
+_JSON:_
+
+_Input HTML:_
+
+```html
+<p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
+<p class="SidebarHeadsbh">Special Information</p>
+<p class="SpaceBreak-Internalint">(this versatile block para will be included in the <aside>...)</p>
+<p class="BookmakerProcessingInstructionbpi">(...and so will this one)</p>
+<p class="SidebarTextNo-Indentsbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
+<p class="BookmakerProcessingInstructionbpi">this versatile block para will not be included in the <aside> block...</p>
+<p class="SpaceBreak-Internalint">...and neither will this one</p>
+<p class="Text-Standardtx">Some text that follows a box.</p>
+```
+
+_Output HTML:_
+
+```html
+<p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
+<aside data-type="sidebar">
+  <p class="SidebarHeadsbh">Special Information</p>
+  <p class="SpaceBreak-Internalint">(this versatile block para will be included in the <aside>...)</p>
+  <p class="BookmakerProcessingInstructionbpi">(...and so will this one)</p>
+  <p class="SidebarTextNo-Indentsbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
+</aside>
+<p class="BookmakerProcessingInstructionbpi">this versatile block para will not be included in the <aside> block...</p>
+<p class="SpaceBreak-Internalint">...and neither will this one</p>
+<p class="Text-Standardtx">Some text that follows a box.</p>
+```
+
 ### Images
 
 _JSON group:_ illustrationparas
 
 _HTML element:_ figure
 
-_data-type: none_ 
+_data-type: none_
 
 _class:_ Illustrationholderill
 
@@ -489,7 +533,7 @@ When running the full conversion from .docx to HTMLBook, footnotes that are embe
 </div>
 ```
 
-* Footnote references (the marker denoting the location in the text to which the footnote corresponds) must be tagged as a span with an id of "footnote-' \+ the note number. E.g.: 
+* Footnote references (the marker denoting the location in the text to which the footnote corresponds) must be tagged as a span with an id of "footnote-' \+ the note number. E.g.:
 
 ```html
 <p class="TextStandardtx">Macmillan Publishers is currently located in the Flatiron Building.<span id="footnote-1">1</span></p>
