@@ -366,11 +366,11 @@ _Input HTML:_
 ```html
 <p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
 <p class="SidebarHeadsbh">Special Information</p>
-<p class="SpaceBreak-Internalint">(this spacebreak will be included in the <aside>...)</p>
-<p class="SpaceBreak-Internalint">(...this one too)</p>
+<p class="SpaceBreak-Internalint">(this versatile block para will be included in the <aside>...)</p>
+<p class="BookmakerProcessingInstructionbpi">(...and so will this one)</p>
 <p class="SidebarTextNo-Indentsbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
-<p class="BookmakerProcessingInstructionbpi">this trailing instruction para will not be included in the <aside> block...</p>
-<p class="BookmakerProcessingInstructionbpi">...and neither will this one</p>
+<p class="BookmakerProcessingInstructionbpi">this versatile block para will not be included in the <aside> block...</p>
+<p class="SpaceBreak-Internalint">...and neither will this one</p>
 <p class="Text-Standardtx">Some text that follows a box.</p>
 ```
 
@@ -380,12 +380,12 @@ _Output HTML:_
 <p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
 <aside data-type="sidebar">
   <p class="SidebarHeadsbh">Special Information</p>
-  <p class="SpaceBreak-Internalint">(this spacebreak will be included in the <aside>...)</p>
-  <p class="SpaceBreak-Internalint">(...this one too)</p>
+  <p class="SpaceBreak-Internalint">(this versatile block para will be included in the <aside>...)</p>
+  <p class="BookmakerProcessingInstructionbpi">(...and so will this one)</p>
   <p class="SidebarTextNo-Indentsbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
 </aside>
-<p class="BookmakerProcessingInstructionbpi">this trailing instruction para will not be included in the <aside> block...</p>
-<p class="BookmakerProcessingInstructionbpi">...and neither will this one</p>
+<p class="SpaceBreak-Internalint">(this versatile block para will be included in the <aside>...)</p>
+<p class="BookmakerProcessingInstructionbpi">(...and so will this one)</p>
 <p class="Text-Standardtx">Some text that follows a box.</p>
 ```
 
