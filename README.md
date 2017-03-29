@@ -384,8 +384,8 @@ _Output HTML:_
   <p class="BookmakerProcessingInstructionbpi">(...and so will this one)</p>
   <p class="SidebarTextNo-Indentsbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
 </aside>
-<p class="SpaceBreak-Internalint">(this versatile block para will be included in the <aside>...)</p>
-<p class="BookmakerProcessingInstructionbpi">(...and so will this one)</p>
+<p class="BookmakerProcessingInstructionbpi">this versatile block para will not be included in the <aside> block...</p>
+<p class="SpaceBreak-Internalint">...and neither will this one</p>
 <p class="Text-Standardtx">Some text that follows a box.</p>
 ```
 
