@@ -349,13 +349,13 @@ _Output HTML:_
 
 _JSON group:_ versatileblockparas
 
-_HTML element:_ n/a
+_HTML element: n/a_
 
 _data-type: none_
 
 _class:_ BookmakerProcessingInstructionbpi, SpaceBreak-Internalint
 
-Versatile Block Paragraphs are paragraphs that should be included when tagging contiguous blocks of the aforementioned block-types: Extracts, Epigraphs, Boxes, Sidebar, or Poetry. This is only where the preceding and following sibling are both members of the same block type; a Versatile Block Paragraph leading or trailing a block is not included.  
+Versatile Block Paragraphs are paragraphs that should be included in contiguous blocks of _any_ of the aforementioned block-types: Extracts, Epigraphs, Poetry, Boxes, or Sidebars. They are only included when the preceding and following siblings are both members of the same block type– Versatile Block Paragraphs at the beginning or end of a contiguous block are not included in the block.  
 
 #### Sample 1
 
