@@ -349,11 +349,11 @@ _Output HTML:_
 
 _JSON group:_ versatileblockparas
 
-_HTML element: n/a_
+_HTML element: unchanged_
 
-_data-type: none_
+_data-type: unchanged_
 
-_class:_ BookmakerProcessingInstructionbpi, SpaceBreak-Internalint
+_class: unchanged_
 
 Versatile Block Paragraphs are paragraphs that should be included in contiguous blocks of _any_ of the  block-types listed above: Extracts, Epigraphs, Poetry, Boxes, or Sidebars. Versatile Block Paragraphs at the beginning or end of a contiguous block are not included in the block.
 
