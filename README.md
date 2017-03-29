@@ -355,7 +355,7 @@ _data-type: none_
 
 _class:_ BookmakerProcessingInstructionbpi, SpaceBreak-Internalint
 
-Versatile Block Paragraphs are paragraphs that should be included in contiguous blocks of _any_ of the aforementioned block-types: Extracts, Epigraphs, Poetry, Boxes, or Sidebars. They are only included when the preceding and following siblings are both members of the same block type– Versatile Block Paragraphs at the beginning or end of a contiguous block are not included in the block.  
+Versatile Block Paragraphs are paragraphs that should be included in contiguous blocks of _any_ of the  block-types listed above: Extracts, Epigraphs, Poetry, Boxes, or Sidebars. Versatile Block Paragraphs at the beginning or end of a contiguous block are not included in the block.
 
 #### Sample 1
 
@@ -366,10 +366,11 @@ _Input HTML:_
 ```html
 <p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
 <p class="SidebarHeadsbh">Special Information</p>
-<p class="SpaceBreak-Internalint">(this spacebreak will be included in the <aside>)</p>
+<p class="SpaceBreak-Internalint">(this spacebreak will be included in the <aside>...)</p>
+<p class="SpaceBreak-Internalint">(...this one too)</p>
 <p class="SidebarTextNo-Indentsbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
-<p class="SidebarTextsbtx">This is some more text that describes the special information that people care about.</p>
-<p class="BookmakerProcessingInstructionbpi">this trailing instruction para will not be included in the <aside> block</p>
+<p class="BookmakerProcessingInstructionbpi">this trailing instruction para will not be included in the <aside> block...</p>
+<p class="BookmakerProcessingInstructionbpi">...and neither will this one</p>
 <p class="Text-Standardtx">Some text that follows a box.</p>
 ```
 
@@ -379,11 +380,12 @@ _Output HTML:_
 <p class="Text-Standardtx">Some people are very concerned about certain kinds of special information.</p>
 <aside data-type="sidebar">
   <p class="SidebarHeadsbh">Special Information</p>
-  <p class="SpaceBreak-Internalint">(this spacebreak will be included in the <aside>)</p>
+  <p class="SpaceBreak-Internalint">(this spacebreak will be included in the <aside>...)</p>
+  <p class="SpaceBreak-Internalint">(...this one too)</p>
   <p class="SidebarTextNo-Indentsbtx1">This is a paragraph within a box. We&#x2019;re just testing things out to see how they look.</p>
-  <p class="SidebarTextsbtx">This is some more text that describes the special information that people care about.</p>
 </aside>
-<p class="BookmakerProcessingInstructionbpi">this trailing instruction para is not included in the <aside> block</p>
+<p class="BookmakerProcessingInstructionbpi">this trailing instruction para will not be included in the <aside> block...</p>
+<p class="BookmakerProcessingInstructionbpi">...and neither will this one</p>
 <p class="Text-Standardtx">Some text that follows a box.</p>
 ```
 
