@@ -7,7 +7,7 @@
 			"tag-name": "p",
 			"data-types": [
 				{
-					"data-type":"@default",
+					"data-type": "@default",
 					"attributes": [],
 					"doc-style": ["@default"],
 					"class": [],
@@ -15,6 +15,60 @@
 					"behavior": [
 						{
 							"name": "new-sibling"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "table",
+			"data-types": [
+				{
+					"data-type": "@default",
+					"attributes": [],
+					"doc-style": ["@default"],
+					"class": [],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "new-parent",
+              "parent": "table"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "tableRow",
+			"data-types": [
+				{
+					"data-type": "@default",
+					"attributes": [],
+					"doc-style": ["@default"],
+					"class": [],
+					"inner-text": false,
+					"behavior": [
+						{
+							"name": "new-child",
+              "parent": "tr"
+						}
+					]
+				}
+			]
+		},
+		{
+			"tag-name": "tableCell",
+			"data-types": [
+				{
+					"data-type": "@default",
+					"attributes": [],
+					"doc-style": ["@default"],
+					"class": [],
+					"inner-text": true,
+					"behavior": [
+						{
+							"name": "new-child",
+              "parent": "td"
 						}
 					]
 				}
